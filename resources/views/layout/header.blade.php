@@ -1,6 +1,17 @@
+<style>
+  .nav-link:focus,
+  .nav-link:hover {
+    color: #050400 !important;
+  }
+
+  .navbar-nav a {
+    color: #050400 !important;
+  }
+</style>
+
 <body>
   <header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg  bg-white text-black">
       <div class="container">
         <a class="navbar-brand" href="{{route('home')}}">
           <img src="{{asset('/images/logo.png  ')}}" alt="" srcset="" class="header-logo">
@@ -31,7 +42,7 @@
           </ul>
           <form class="d-flex">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
+            <button class="btn btn-warning" type="submit">Search</button>
           </form>
         </div>
       </div>

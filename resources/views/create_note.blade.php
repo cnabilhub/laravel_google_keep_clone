@@ -18,21 +18,29 @@ Add Note
   <label for="exampleFormControlTextarea1" class="form-label">Note content</label>
   <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="content"></textarea>
 
-  <select class="form-select mt-4" aria-label="Default select example" name="category_id">
-    @foreach ($categories as $category)
-    <option value="{{$category->id}}">{{$category->name}}</option>
+  <div class="row mt-3 mb-2">
+    <div class="col col-md-6">
+      <label for="exampleFormControlInput1" class="form-label">Title :</label>
+      <select class="form-select" aria-label="Default select example" name="category_id">
+        @foreach ($categories as $category)
+        <option value="{{$category->id}}">{{$category->name}}</option>
 
-    @endforeach
+        @endforeach
 
-  </select>
+      </select>
+    </div>
 
-  <select class="form-select mt-4" aria-label="Default select example" name="tag_id">
-    @foreach ($tags as $tag)
-    <option value="{{$tag->id}}">{{$tag->name}}</option>
+    <div class="col col-md-6">
+      <label for="exampleFormControlInput1" class="form-label">Title :</label>
+      <select class="form-select" aria-label="Default select example" name="tag_id">
+        @foreach ($tags as $tag)
+        <option value="{{$tag->id}}" style="color:{{$tag->color}}">{{$tag->name}}</option>
 
-    @endforeach
+        @endforeach
 
-  </select>
+      </select>
+    </div>
+  </div>
 
   <button type="submit" class="btn btn-success mt-4">Save</button>
 

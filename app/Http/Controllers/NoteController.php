@@ -23,7 +23,7 @@ class NoteController extends Controller
         } else {
 
             $data['selected'] = $cat;
-            $data['notes'] = Note::all()->where('category_id', '=', $cat);
+            $data['notes'] = Note::where('category_id', '=', $cat)->paginate(6);
         }
 
         $data['categories'] = Category::all();

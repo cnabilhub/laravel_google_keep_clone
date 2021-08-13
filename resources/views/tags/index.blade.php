@@ -19,8 +19,7 @@ Tags
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <form action="{{route('tags.store')}}" method="POST">
-              @method('POST')
+            <form action="{{ route('tags.store') }}" method="POST">
               @csrf
               <label for="exampleFormControlInput1" class="form-label">Tag name :</label>
               <input type="text" class="form-control mb-3" id="exampleFormControlInput1" placeholder="Tag name"

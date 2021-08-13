@@ -7,7 +7,7 @@ Google Keep Clone
 
 
   <div class="row mb-4">
-    <div class="bg-light p-3 d-flex justify-content-between align-items-center rounded">
+    <div class="bg-white p-3 d-flex justify-content-between align-items-center rounded">
       <div>
         Select Category
         <select id='cat' class="custom-select custom-select-md inline">

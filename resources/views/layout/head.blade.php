@@ -12,4 +12,7 @@
  <title>@yield('title')</title>
  <link rel="icon" type="image/png" href="{{asset('images/logo.png')}}">
  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+ <link rel="stylesheet" href="{{asset('/css/font-awesome.min.css')}}">
+
 </head>

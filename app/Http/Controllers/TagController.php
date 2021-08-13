@@ -39,15 +39,13 @@ class TagController extends Controller
     public function store(Request $request)
     {
         try {
-            //code...
-            //
 
             $data = $request->validate([
                 'name' => 'required|max:50',
                 'color' => 'required|max:1000',
             ]);
             Tag::create($data)->save();
-            return redirect()->route('tags.store')->with(['message' => 'Task created successful!']);
+            return redirect()->route('tags')->with(['message' => 'Task created successful!']);
         } catch (\Throwable $th) {
             //throw $th;
             return redirect()->route('tags')->with(['error' => $th->getMessage()]);

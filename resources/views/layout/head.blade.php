@@ -11,4 +11,5 @@
  <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
  <title>@yield('title')</title>
  <link rel="icon" type="image/png" href="{{asset('images/logo.png')}}">
+ <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 </head>

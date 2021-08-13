@@ -30,7 +30,7 @@
               <a class="nav-link" href="{{route('home')}}">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{route('create_note')}}">Add Note</a>
+              <a class="nav-link" href="{{route('notes.create')}}">Add Note</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{{route('categories')}}">Categories</a>

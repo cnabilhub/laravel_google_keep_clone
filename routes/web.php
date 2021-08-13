@@ -22,19 +22,21 @@ Route::get('/{cat?}', [NoteController::class, 'index'])->name('home')->where('ca
 // notes
 
 
-Route::get('/notes/create', [NoteController::class, 'create'])->name('create_note');
+Route::get('/notes/create', [NoteController::class, 'create'])->name('notes.create');
 
-Route::post('/notes/save', [NoteController::class, 'store'])->name('save_note');
+Route::post('/notes/store', [NoteController::class, 'store'])->name('notes.store');
+Route::post('/notes/destroy', [NoteController::class, 'destroy'])->name('notes.destroy');
 
 
 // Categories 
 
 Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
 
-Route::post('/categories/save', [CategoryController::class, 'store'])->name('save_categories');
+Route::post('/categories/store', [CategoryController::class, 'store'])
+ ->name('categories.store');
 
 
 // Tags 
 
 Route::get('/tags', [TagController::class, 'index'])->name('tags');
-Route::post('/tags/create', [TagController::class, 'store'])->name('tags.store');
+Route::post('/tags/store', [TagController::class, 'store'])->name('tags.store');

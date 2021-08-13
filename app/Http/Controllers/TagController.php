@@ -15,8 +15,9 @@ class TagController extends Controller
     public function index()
     {
         //
-        $tags = Tag::all();
-        return view('tags', ['tags' => $tags]);
+        $tags = Tag::paginate(6);
+        $data['tags']  = $tags;
+        return view('tags.index')->with($data);
     }
 
     /**
@@ -37,15 +38,20 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            //code...
+            //
 
-        $data = $request->validate([
-            'name' => 'required|max:50',
-            'color' => 'required|max:1000',
-        ]);
-        Tag::create($data)->save();
-        $request->session()->flash('success', 'Task was successful!');
-        return redirect(route('tags'));
+            $data = $request->validate([
+                'name' => 'required|max:50',
+                'color' => 'required|max:1000',
+            ]);
+            Tag::create($data)->save();
+            return redirect()->route('tags.store')->with(['message' => 'Task created successful!']);
+        } catch (\Throwable $th) {
+            //throw $th;
+            return redirect()->route('tags')->with(['error' => $th->getMessage()]);
+        }
     }
 
     /**

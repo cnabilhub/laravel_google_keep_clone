@@ -3,7 +3,7 @@
 Google Keep Clone
 @endsection
 @section('section')
-<div class="container mt-5">
+<div class="container">
 
 
   <div class="row mb-4">
@@ -42,9 +42,11 @@ Google Keep Clone
           <h6 class="card-subtitle mb-2 text-muted">{{$note->updated_at}}</h6>
           <p class="card-text">{{$note->content}}</p>
 
-          <button class="btn btn-sm btn-primary">Copy</button>
-          <button class="btn btn-sm btn-secondary">Edit</button>
-          <button class="btn btn-sm btn-danger">Delete</button>
+          <form action="{{route('notes.destroy')}}" method="POST">
+            @csrf
+            <input type="hidden" name='id' value="{{$note->id}}">
+            <button type="submit" class="btn btn-sm btn-danger rounded">Delete</button>
+          </form>
         </div>
       </div>
     </div>

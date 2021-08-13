@@ -8,7 +8,7 @@ Add Note
 
 
 <div class="mb-3">
-  <form action="{{route('save_note')}}" method="POST">
+  <form action="{{route('notes.store')}}" method="POST">
     @method('POST')
     @csrf
     <label for="exampleFormControlInput1" class="form-label">Title :</label>

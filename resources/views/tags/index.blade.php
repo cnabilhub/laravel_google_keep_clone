@@ -1,35 +1,33 @@
 @extends('layout.master')
 
+
 @section('title')
-Categories
+Tags
 @endsection
 
 @section('section')
 <div class="container">
-  <div class=" d-flex justify-content-between align-items-center">
-    <h6> Categories </h6>
-
-    <button type="button" class="btn btn-secondary col col-md-2 mt-3 mb-5" data-bs-toggle="modal"
-      data-bs-target="#exampleModal">
-      Add Category
-    </button>
-  </div>
   <div class="row">
+
+    <h6> Tags </h6>
     {{-- modal --}}
     <div class="modal" tabindex="-1" id="exampleModal">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Add Category</h5>
+            <h5 class="modal-title">Add tag</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <form action="{{route('save_categories')}}" method="POST">
+            <form action="{{route('tags.store')}}" method="POST">
               @method('POST')
               @csrf
-              <label for="exampleFormControlInput1" class="form-label">Category name :</label>
-              <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="category name"
+              <label for="exampleFormControlInput1" class="form-label">Tag name :</label>
+              <input type="text" class="form-control mb-3" id="exampleFormControlInput1" placeholder="Tag name"
                 name="name">
+              <label for="exampleColorInput" class="form-label">Select Color </label>
+              <input type="color" class="form-control form-control-color" name="color" value="#563d7c"
+                title="Choose your color">
           </div>
           <div class="mb-3">
 
@@ -43,7 +41,10 @@ Categories
       </div>
     </div>
 
-
+    <button type="button" class="btn btn-secondary col col-md-2 mt-3 mb-5" data-bs-toggle="modal"
+      data-bs-target="#exampleModal">
+      Add Tag
+    </button>
 
   </div>
 
@@ -53,15 +54,19 @@ Categories
       <tr>
         <th scope="col">#</th>
         <th scope="col">Name</th>
+        <th scope="col">Color</th>
         <th scope="col">Actions</th>
       </tr>
     </thead>
     <tbody>
-      @foreach ($categories as $category)
+      @foreach ($tags as $tag)
       <tr>
 
-        <td>{{$category->id}}</td>
-        <td>{{$category->name}}</td>
+        <td>{{$tag->id}}</td>
+        <td>{{$tag->name}}</td>
+        <td>
+          <div class='color' style="background: {{$tag->color}}"> </div>
+        </td>
         <td>
           <button class="btn btn-secondary">Edit</button>
           <button class="btn btn-danger">delete</button>
@@ -70,9 +75,14 @@ Categories
       @endforeach
     </tbody>
   </table>
-
-
-  {{ $categories->links() }}
-
+  {{ $tags->links() }}
 </div>
+
+<style>
+  .color {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+  }
+</style>
 @endsection

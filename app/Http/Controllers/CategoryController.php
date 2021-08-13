@@ -17,7 +17,7 @@ class CategoryController extends Controller
         //
 
         $data = Category::paginate(6);
-        return view('category', ['categories' => $data]);
+        return view('categories.index', ['categories' => $data]);
     }
 
     /**
@@ -51,11 +51,10 @@ class CategoryController extends Controller
                 'name' => $request->name,
             ])->save();
 
-            $request->session()->flash('success', 'Task was successful!');
-            return redirect(route('categories'));
+            return redirect()->route('categories')->with(['message' => 'Category created succesfuly']);
         } catch (\Exception $e) {
-            $request->session()->flash('error', $e->getMessage());
-            return redirect(route('categories'));
+
+            return redirect()->route('categories')->with(['error' => $e->getMessage()]);
         }
     }
 

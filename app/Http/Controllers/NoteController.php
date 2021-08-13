@@ -28,7 +28,7 @@ class NoteController extends Controller
 
         $data['categories'] = Category::all();
 
-        return view('home', ['data' => $data]);
+        return view('notes.index', ['data' => $data]);
 
         // 
     }
@@ -43,7 +43,7 @@ class NoteController extends Controller
         //
         $categories = Category::all();
         $tags = Tag::all();
-        return (view('create_note', ['categories' => $categories, 'tags' => $tags]));
+        return (view('notes.create', ['categories' => $categories, 'tags' => $tags]));
     }
 
     /**
@@ -65,12 +65,10 @@ class NoteController extends Controller
             ]);
             Note::create($data)->save();
 
-            $request->session()->flash('success', 'Task was successful!');
-            return redirect(route('create_note'));
+            return redirect()->route('notes.create')->with('message', 'Note created Successfully');
         } catch (\Exception $e) {
 
-            $request->session()->flash('error', $e->getMessage());
-            return redirect(route('create_note'));
+            return redirect()->route('notes.create')->with('error', $e->getMessage());
         }
     }
 
@@ -114,8 +112,17 @@ class NoteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         //
+        try {
+            # code...
+            $deleted = Note::findOrfail($request->id)->delete();
+            return redirect()->route('home')->with(['message' => 'Note deleted successfuly !']);
+        } catch (\Throwable $e) {
+            # code...
+
+            return redirect()->route('home')->with(['message' => $e->getMessage()]);
+        }
     }
 }

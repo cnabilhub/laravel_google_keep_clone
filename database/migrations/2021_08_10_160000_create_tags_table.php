@@ -18,6 +18,9 @@ class CreateTagsTable extends Migration
             $table->text('name');
             $table->text('color');
             $table->timestamps();
+
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

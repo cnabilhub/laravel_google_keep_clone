@@ -7,7 +7,7 @@ Categories
 @section('section')
 <div class="container">
   <div class=" d-flex justify-content-between align-items-center">
-    <h6> Categories </h6>
+    <h3> Categories </h3>
 
     <button type="button" class="btn btn-secondary col col-md-2 mt-3 mb-5" data-bs-toggle="modal"
       data-bs-target="#exampleModal">

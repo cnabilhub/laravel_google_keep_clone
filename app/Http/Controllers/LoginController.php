@@ -37,7 +37,8 @@ class LoginController extends Controller
         ]);
         $user['password'] = Hash::make($request->password);
         User::create($user);
-        dd($user);
+
+        return redirect()->route('auth.login');
     }
 
 

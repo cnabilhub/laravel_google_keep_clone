@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TagController extends Controller
 {
@@ -15,7 +16,7 @@ class TagController extends Controller
     public function index()
     {
         //
-        $tags = Tag::paginate(6);
+        $tags = Tag::where('user_id', '=', Auth::id())->paginate(6);
         $data['tags']  = $tags;
         return view('tags.index')->with($data);
     }
@@ -44,6 +45,8 @@ class TagController extends Controller
                 'name' => 'required|max:50',
                 'color' => 'required|max:1000',
             ]);
+            $data['user_id'] = Auth::id();
+
             Tag::create($data)->save();
             return redirect()->route('tags')->with(['message' => 'Task created successful!']);
         } catch (\Throwable $th) {

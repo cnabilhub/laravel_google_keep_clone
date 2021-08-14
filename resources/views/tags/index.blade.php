@@ -7,9 +7,9 @@ Tags
 
 @section('section')
 <div class="container">
-  <div class="row">
+  <d iv class="d-flex justify-content-between align-items-center">
 
-    <h6> Tags </h6>
+    <h3> Tags </h3>
     {{-- modal --}}
     <div class="modal" tabindex="-1" id="exampleModal">
       <div class="modal-dialog">
@@ -45,36 +45,36 @@ Tags
       Add Tag
     </button>
 
-  </div>
+</div>
 
 
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Name</th>
-        <th scope="col">Color</th>
-        <th scope="col">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      @foreach ($tags as $tag)
-      <tr>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Color</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach ($tags as $tag)
+    <tr>
 
-        <td>{{$tag->id}}</td>
-        <td>{{$tag->name}}</td>
-        <td>
-          <div class='color' style="background: {{$tag->color}}"> </div>
-        </td>
-        <td>
-          <button class="btn btn-secondary">Edit</button>
-          <button class="btn btn-danger">delete</button>
-        </td>
-      </tr>
-      @endforeach
-    </tbody>
-  </table>
-  {{ $tags->links() }}
+      <td>{{$tag->id}}</td>
+      <td>{{$tag->name}}</td>
+      <td>
+        <div class='color' style="background: {{$tag->color}}"> </div>
+      </td>
+      <td>
+        <button class="btn btn-secondary">Edit</button>
+        <button class="btn btn-danger">delete</button>
+      </td>
+    </tr>
+    @endforeach
+  </tbody>
+</table>
+{{ $tags->links() }}
 </div>
 
 <style>

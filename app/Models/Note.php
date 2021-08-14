@@ -11,7 +11,7 @@ class Note extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'content', 'category_id', 'tag_id'];
+    protected $guarded = ['id'];
 
 
     public function category()

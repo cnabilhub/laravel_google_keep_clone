@@ -27,37 +27,38 @@
           <div class="navbar-nav d-flex justify-content-between align-items-center">
 
             <a class="nav-link {{Route::currentRouteName() == 'home' ? 'active' : '' }}" href="{{route('home')}}">
-              Notes</a>
+              <i class="fas fa-home"></i> Home </a>
 
             <a class="nav-link {{Route::currentRouteName() == 'notes.create' ? 'active' : '' }}"
-              href="{{route('notes.create')}}">Add Note</a>
+              href="{{route('notes.create')}}"><i class="fas fa-plus-square"></i> Add Note</a>
 
             <a class="nav-link {{Route::currentRouteName() == 'categories' ? 'active' : '' }}"
-              href="{{route('categories')}}">Categories</a>
+              href="{{route('categories')}}"><i class="fas fa-list-alt"></i> Categories</a>
 
-            <a class="nav-link {{Route::currentRouteName() == 'tags' ? 'active' : '' }}"
-              href="{{route('tags')}}">Tags</a>
+            <a class="nav-link {{Route::currentRouteName() == 'tags' ? 'active' : '' }}" href="{{route('tags')}}"><i
+                class="fas fa-tags"></i> Tags</a>
 
             <div class="px-3"></div>
 
             <form class="d-flex">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-warning me-2" type="submit">Search</button>
+              <input class="form-control  me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-warning me-2 inline" type="submit"> <i class="fas fa-search"></i></button>
             </form>
             <div class="px-4"></div>
             @auth
             <div class="dropdown">
-              <button class="btn dropdown-toggle bg-light shadow-sm" type="button" id="dropdownMenuButton"
+              <button class="btn dropdown-toggle bg-white shadow-sm" type="button" id="dropdownMenuButton"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <img src="{{asset('/images/profiles/profile.jpg')}}" class="profile-img" alt="Cinque Terre">
                 {{ Auth::user()->name; }}
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item" href="#">
-                  <i class="fa fa-user-cog"></i> Setting</a>
+                  <i class="fas fa-user"></i> Setting</a>
 
-                <a class="dropdown-item text-danger" href="{{route('auth.logout')}}"><i class="fa fa-sign-out"
-                    aria-hidden="true"></i> Logout</a>
+                <a class="dropdown-item text-danger" href="{{route('auth.logout')}}">
+                  <i class="fas fa-sign-out-alt"></i>
+                  Logout</a>
               </div>
             </div>
             @endauth

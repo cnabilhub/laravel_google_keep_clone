@@ -6,6 +6,7 @@ use App\Models\Tag;
 use App\Models\Note;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class NoteController extends Controller
 {
@@ -19,7 +20,7 @@ class NoteController extends Controller
     {
 
         if ($cat == null) {
-            $data['notes'] = Note::paginate(6);
+            $data['notes'] = Note::where('user_id', '=', Auth::id())->paginate(6);
         } else {
 
             $data['selected'] = $cat;
@@ -63,6 +64,7 @@ class NoteController extends Controller
                 'category_id' => 'required|integer',
                 'tag_id' => 'required|integer'
             ]);
+            $data['user_id'] = Auth::id();
             Note::create($data)->save();
 
             return redirect()->route('notes.create')->with('message', 'Note created Successfully');
@@ -122,7 +124,7 @@ class NoteController extends Controller
         } catch (\Throwable $e) {
             # code...
 
-            return redirect()->route('home')->with(['message' => $e->getMessage()]);
+            return redirect()->route('home')->with(['error' => $e->getMessage()]);
         }
     }
 }

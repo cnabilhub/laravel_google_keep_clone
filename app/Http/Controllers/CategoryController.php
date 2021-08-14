@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -16,7 +17,7 @@ class CategoryController extends Controller
     {
         //
 
-        $data = Category::paginate(6);
+        $data = Category::where('user_id', '=', Auth::id())->paginate(6);
         return view('categories.index', ['categories' => $data]);
     }
 
@@ -47,8 +48,9 @@ class CategoryController extends Controller
             ]);
 
 
-            Category::create([
+            $dataTosend = Category::create([
                 'name' => $request->name,
+                'user_id' => Auth::id(),
             ])->save();
 
             return redirect()->route('categories')->with(['message' => 'Category created succesfuly']);

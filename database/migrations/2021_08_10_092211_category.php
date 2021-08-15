@@ -33,6 +33,6 @@ class Category extends Migration
     {
         //
 
-        Schema::drop('categories');
+        Schema::dropIfExists('categories');
     }
 }

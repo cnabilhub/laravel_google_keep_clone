@@ -11,8 +11,8 @@ class Tag extends Model
     use HasFactory;
     protected $guarded = ['id'];
 
-    public function tag()
+    public function notes()
     {
-        return $this->hasMany(Note::class);
+        return $this->belongsToMany(Note::class);
     }
 }

@@ -38,22 +38,31 @@
             <a class="nav-link {{Route::currentRouteName() == 'tags' ? 'active' : '' }}" href="{{route('tags')}}"><i
                 class="fas fa-tags"></i> Tags</a>
 
-            <div class="px-3"></div>
+            <div class="px-2"></div>
 
             <form class="d-flex">
               <input class="form-control  me-2" type="search" placeholder="Search" aria-label="Search">
               <button class="btn btn-warning me-2 inline" type="submit"> <i class="fas fa-search"></i></button>
             </form>
-            <div class="px-4"></div>
+            <div class="px-2"></div>
             @auth
             <div class="dropdown">
               <button class="btn dropdown-toggle bg-white shadow-sm" type="button" id="dropdownMenuButton"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <img src="{{asset('/images/profiles/profile.jpg')}}" class="profile-img" alt="Cinque Terre">
-                {{ Auth::user()->name; }}
+                @if(Auth::user()->img_path)
+
+                <img src="{{asset('/images/profiles/'.Auth::user()->img_path)}}" class="profile-img" alt="">
+
+                @else
+                <img src="{{asset('/images/profiles/default.png')}}" class="profile-img" alt="">
+
+                @endif ()
+
+
+                {{ Auth::user()->name }}
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="{{route('auth.settings')}}">
                   <i class="fas fa-user"></i> Setting</a>
 
                 <a class="dropdown-item text-danger" href="{{route('auth.logout')}}">

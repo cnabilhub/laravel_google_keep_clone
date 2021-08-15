@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-class LoginController extends Controller
+class UserController extends Controller
 {
     /**
      * Handle an authentication attempt.
@@ -34,8 +34,18 @@ class LoginController extends Controller
             'email' => ['required', 'email'],
             'name' => ['required'],
             'password' => ['required'],
+            'img' => ['mimes:jpg,png', 'max:5048'],
+
         ]);
+
         $user['password'] = Hash::make($request->password);
+
+        if ($request->img !== null) {
+            $newImgName = time() . '-' . $request->name . '.' . $request->img->extension();
+            $request->img->move(public_path('images/profiles'), $newImgName);
+            $user['img_path'] = $newImgName;
+        }
+
         User::create($user);
 
         return redirect()->route('auth.login');
@@ -61,7 +71,6 @@ class LoginController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
-
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
@@ -82,5 +91,11 @@ class LoginController extends Controller
         $request->session()->regenerateToken();
 
         return redirect()->route('auth.login');
+    }
+
+    // Register page
+    public function settings()
+    {
+        return view('auth.settings');
     }
 }

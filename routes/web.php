@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\NoteController;
-use App\Http\Controllers\LoginController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
 
 /*
@@ -19,17 +19,17 @@ use App\Http\Controllers\CategoryController;
 
 // Auth login
 
-Route::get('/login', [LoginController::class, 'index'])->name('auth.login');
-Route::post('/login', [LoginController::class, 'authenticate'])->name('auth.authenticate');
+Route::get('/login', [UserController::class, 'index'])->name('auth.login');
+Route::post('/login', [UserController::class, 'authenticate'])->name('auth.authenticate');
 
 // Auth Register
 
-Route::get('/register', [LoginController::class, 'register'])->name('auth.register');
-Route::post('/register', [LoginController::class, 'create'])->name('auth.create');
+Route::get('/register', [UserController::class, 'register'])->name('auth.register');
+Route::post('/register', [UserController::class, 'create'])->name('auth.create');
 
 // Auth Register
 
-Route::get('/logout', [LoginController::class, 'logout'])->name('auth.logout');
+Route::get('/logout', [UserController::class, 'logout'])->name('auth.logout');
 
 Route::middleware(['auth'])->group(function () {
  // Start group 
@@ -56,5 +56,11 @@ Route::middleware(['auth'])->group(function () {
 
  Route::get('/tags', [TagController::class, 'index'])->name('tags');
  Route::post('/tags/store', [TagController::class, 'store'])->name('tags.store');
+
+ // settings 
+ Route::get('/user/settings', [UserController::class, 'settings'])->name('auth.settings');
+
+
+
  // end group
 });

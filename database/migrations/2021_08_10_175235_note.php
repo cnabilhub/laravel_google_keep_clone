@@ -41,6 +41,6 @@ class Note extends Migration
     public function down()
     {
         //
-        Schema::drop('notes');
+        Schema::dropIfExists('notes');
     }
 }

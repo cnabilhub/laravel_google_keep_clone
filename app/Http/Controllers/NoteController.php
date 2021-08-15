@@ -24,7 +24,7 @@ class NoteController extends Controller
         } else {
 
             $data['selected'] = $cat;
-            $data['notes'] = Note::where('category_id', '=', $cat)->paginate(6);
+            $data['notes'] = Note::where('category_id', '=', $cat)->where('user_id', '=', Auth::id())->paginate(6);
         }
 
         $data['categories'] = Category::all();
@@ -61,11 +61,12 @@ class NoteController extends Controller
             $data = $request->validate([
                 'title' => 'required|max:50',
                 'content' => 'required|max:1000',
-                'category_id' => 'required|integer',
-                'tag_id' => 'required|integer'
+                'category_id' => 'integer',
             ]);
             $data['user_id'] = Auth::id();
-            Note::create($data)->save();
+            $note = Note::create($data);
+            $note->save();
+            $note->tags()->attach($request->tags);
 
             return redirect()->route('notes.create')->with('message', 'Note created Successfully');
         } catch (\Exception $e) {

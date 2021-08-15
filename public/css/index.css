@@ -25,3 +25,25 @@ font-weight: bold;
         font-weight: bold;
         border-bottom: 2px solid #ffc107;
     }
+
+/* bootstrap.min.css | https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css */
+
+.form-select,.form-control:focus {
+  box-shadow: none;
+  border-color: #4a4a4a;
+  outline: none;
+}
+
+.form-select:focus {
+  box-shadow: none;
+  border-color: #4a4a4a;
+  outline: none;
+}
+.form-select,.form-control {
+  box-shadow: none;
+  outline: none;
+}
+
+.tag {
+    font-size: 12px;
+}

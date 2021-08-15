@@ -4,11 +4,10 @@ Add Note
 @endsection
 
 @section('section')
+@if ($categories->count()>0)
 <h3> Add Note </h3>
 
-
 <div class="mb-3 mt-3">
-  @if ($categories->count()>0)
   <form action="{{route('notes.store')}}" method="POST">
     @method('POST')
     @csrf
@@ -54,9 +53,11 @@ Add Note
   </form>
   @else
 
-  <h3 class="col text-center">
+  <div class="mt-5 alert alert-warning  text-center">
     You must add at least one category before create a note!
-  </h3>
+    <br>
+    Click <a href="{{route('categories')}}">Here </a> to add a new category
+  </div>
 
   @endif
 

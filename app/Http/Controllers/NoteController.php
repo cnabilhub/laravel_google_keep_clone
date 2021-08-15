@@ -42,8 +42,8 @@ class NoteController extends Controller
     public function create()
     {
         //
-        $categories = Category::all();
-        $tags = Tag::all();
+        $categories = Category::where('user_id', '=', Auth::id())->get();
+        $tags = Tag::where('user_id', '=', Auth::id())->get();
         return (view('notes.create', ['categories' => $categories, 'tags' => $tags]));
     }
 

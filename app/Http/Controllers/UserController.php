@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Hamcrest\Core\HasToString;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -102,7 +103,6 @@ class UserController extends Controller
     public function updatesetting(Request $request)
     {
 
-        dd($request);
 
         $user = $request->validate([
             'name' => ['required'],
@@ -112,9 +112,10 @@ class UserController extends Controller
 
 
         if ($request->password !== null) {
-            $user = User::findOrfail(Auth::id());
-            if ($user) {
-                if ($request->new_user == $request->re_password) {
+            $user_exist = User::findOrfail(Auth::id());
+            if ($user_exist) {
+
+                if ($request->new_password == $request->re_password && Hash::check($request->password, $user_exist->password)) {
 
                     $user['password'] = Hash::make($request->new_password);
                 } else {
@@ -131,7 +132,7 @@ class UserController extends Controller
             $user['img_path'] = $newImgName;
         }
 
-        User::updated($user);
+        User::where('id', Auth::id())->update($user);
 
         return redirect()->route('auth.settings')->with('message', 'updated successfuly  ;)');
     }

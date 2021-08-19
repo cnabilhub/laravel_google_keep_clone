@@ -8,8 +8,8 @@ Settings
 <div class="container">
     <div class=" p-5">
 
-        <form class="form-signin" method="POST" action="" enctype="multipart/form-data">
-
+        <form class="form-signin" method="POST" action="{{route('updatesetting')}}" enctype="multipart/form-data">
+            @method('put')
             @csrf
 
             <div class="row">
@@ -47,7 +47,6 @@ Settings
 
                     @endif ()
 
-                    <img src="{{asset('/images/profiles/'.Auth::user()->img_path)}}" alt="">
 
                     <input id="files" type="file" class="form-control mt-3 mb-3 img" alt="avatar" name="img">
                 </div>

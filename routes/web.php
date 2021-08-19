@@ -32,6 +32,11 @@
           // Start group 
 
 
+          // HOME
+
+          Route::get('/categories/{cat?}', [NoteController::class, 'index'])->name('home')->where('cat', '^[0-9]');
+
+
           // notes
 
           Route::get('/notes/create', [NoteController::class, 'create'])->name('notes.create');
@@ -57,12 +62,10 @@
 
           // settings 
           Route::get('/user/settings', [UserController::class, 'settings'])->name('auth.settings');
-          Route::post('/settings/update', [UserController::class, 'updatesetting']);
+          Route::put('/settings/update', [UserController::class, 'updatesetting'])->name('updatesetting');
 
 
-          // HOME
 
-          Route::get('/categories/{cat?}', [NoteController::class, 'index'])->name('home2')->where('cat', '^[0-9]');
 
           // end group
      });

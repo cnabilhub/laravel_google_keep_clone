@@ -1,12 +1,12 @@
 <!-- <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TagController;
-use App\Http\Controllers\NoteController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\CategoryController;
+     use Illuminate\Support\Facades\Route;
+     use App\Http\Controllers\TagController;
+     use App\Http\Controllers\NoteController;
+     use App\Http\Controllers\UserController;
+     use App\Http\Controllers\CategoryController;
 
-/*
+     /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
@@ -18,51 +18,52 @@ use App\Http\Controllers\CategoryController;
 */
 
 
-// Auth login
+     // Auth login
 
-Route::get('/login', [UserController::class, 'index'])->name('auth.login');
-Route::post('/login', [UserController::class, 'authenticate'])->name('auth.authenticate');
-Route::get('/register', [UserController::class, 'register'])->name('auth.register');
-
-
-// Auth Register
-
-Route::get('/logout', [UserController::class, 'logout'])->name('auth.logout');
-Route::middleware(['auth'])->group(function () {
- // Start group 
+     Route::get('/login', [UserController::class, 'index'])->name('auth.login');
+     Route::post('/login', [UserController::class, 'authenticate'])->name('auth.authenticate');
+     Route::get('/register', [UserController::class, 'register'])->name('auth.register');
 
 
- // notes
+     // Auth Register
 
- Route::get('/notes/create', [NoteController::class, 'create'])->name('notes.create');
- Route::post('/notes/store', [NoteController::class, 'store'])->name('notes.store');
- Route::post('/notes/destroy', [NoteController::class, 'destroy'])->name('notes.destroy');
-
-
- // Categories 
-
- Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
- Route::get('/categories/list', [CategoryController::class, 'getCategories'])
-  ->name('categories.list');
- Route::post('/categories/store', [CategoryController::class, 'store'])
-  ->name('categories.store');
+     Route::get('/logout', [UserController::class, 'logout'])->name('auth.logout');
+     Route::middleware(['auth'])->group(function () {
+      // Start group 
 
 
- // Tags 
+      // notes
 
- Route::get('/tags', [TagController::class, 'index'])->name('tags');
- Route::post('/tags/store', [TagController::class, 'store'])->name('tags.store');
- Route::get('/tags/list', [TagController::class, 'getTags'])->name('tags.list');
-
-
- // settings 
- Route::get('/user/settings', [UserController::class, 'settings'])->name('auth.settings');
- Route::post('/settings/update', [UserController::class, 'updatesetting']);
+      Route::get('/notes/create', [NoteController::class, 'create'])->name('notes.create');
+      Route::post('/notes/store', [NoteController::class, 'store'])->name('notes.store');
+      Route::post('/notes/destroy', [NoteController::class, 'destroy'])->name('notes.destroy');
 
 
- // HOME
+      // Categories 
 
- Route::get('categories/{cat?}', [NoteController::class, 'index'])->name('home')->where('cat', '^[0-9]');
+      Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
+      Route::get('/categories/list', [CategoryController::class, 'getCategories'])
+       ->name('categories.list');
+      Route::post('/categories/store', [CategoryController::class, 'store'])
+       ->name('categories.store');
 
- // end group
-}); -->
+
+      // Tags 
+
+      Route::get('/tags', [TagController::class, 'index'])->name('tags');
+      Route::post('/tags/store', [TagController::class, 'store'])->name('tags.store');
+      Route::get('/tags/list', [TagController::class, 'getTags'])->name('tags.list');
+
+
+      // settings 
+      Route::get('/user/settings', [UserController::class, 'settings'])->name('auth.settings');
+      Route::post('/settings/update', [UserController::class, 'updatesetting']);
+
+
+      // HOME
+
+      Route::get('/categories/{cat?}', [NoteController::class, 'index'])->name('home2')->where('cat', '^[0-9]');
+
+      Route::get('/', [NoteController::class, 'index'])->name('home');
+      // end group
+     });

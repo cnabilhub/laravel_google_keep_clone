@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Hamcrest\Core\HasToString;
 use Illuminate\Http\Request;
+use Hamcrest\Core\HasToString;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -129,6 +130,7 @@ class UserController extends Controller
 
             $newImgName = time() . '-' . $request->name . '.' . $request->img->extension();
             $request->img->move(public_path('images/profiles'), $newImgName);
+            File::delete(public_path('images/profiles/' . Auth::user()->img_path));
             $user['img_path'] = $newImgName;
         }
 

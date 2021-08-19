@@ -20,7 +20,7 @@ class NoteController extends Controller
     {
 
         if ($cat == null) {
-            $data['notes'] = Note::where('user_id', '=', Auth::id())->paginate(6);
+            $data['notes'] = Note::where('user_id', '=', Auth::id())->latest()->paginate(6);
         } else {
 
             $data['selected'] = $cat;

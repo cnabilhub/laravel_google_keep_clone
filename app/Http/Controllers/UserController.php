@@ -98,4 +98,41 @@ class UserController extends Controller
     {
         return view('auth.settings');
     }
+
+    public function updatesetting(Request $request)
+    {
+
+        dd($request);
+
+        $user = $request->validate([
+            'name' => ['required'],
+            'email' => ['required', 'email'],
+
+        ]);
+
+
+        if ($request->password !== null) {
+            $user = User::findOrfail(Auth::id());
+            if ($user) {
+                if ($request->new_user == $request->re_password) {
+
+                    $user['password'] = Hash::make($request->new_password);
+                } else {
+                    return back()->with('error', 'Password dont match');
+                }
+            }
+        }
+
+
+        if ($request->img !== null) {
+
+            $newImgName = time() . '-' . $request->name . '.' . $request->img->extension();
+            $request->img->move(public_path('images/profiles'), $newImgName);
+            $user['img_path'] = $newImgName;
+        }
+
+        User::updated($user);
+
+        return redirect()->route('auth.settings')->with('message', 'updated successfuly  ;)');
+    }
 }

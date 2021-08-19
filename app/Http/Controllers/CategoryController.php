@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use DataTables;
 
 class CategoryController extends Controller
 {
@@ -16,9 +17,29 @@ class CategoryController extends Controller
     public function index()
     {
         //
+        return view('categories.index');
+    }
 
-        $data = Category::where('user_id', '=', Auth::id())->paginate(6);
-        return view('categories.index', ['categories' => $data]);
+    public function getCategories(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = Category::where('user_id', '=', Auth::id())->latest()->get();
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $actionBtn = '
+                    <div class="datatables-actions">
+                    <a  href="javascript:void(0)" class="edit btn btn-success btn-sm">
+                    <i class="fas fa-edit"></i></a> 
+                    <a  href="javascript:void(0)" class="delete btn btn-danger btn-sm">
+                    <i class="fas fa-trash"></i></a>
+                    </div>
+                    ';
+                    return $actionBtn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
     }
 
     /**
@@ -45,11 +66,13 @@ class CategoryController extends Controller
 
             $request->validate([
                 'name' => 'required|max:50',
+                'desc' => 'max:50',
             ]);
 
 
             $dataTosend = Category::create([
                 'name' => $request->name,
+                'desc' => $request->desc,
                 'user_id' => Auth::id(),
             ])->save();
 

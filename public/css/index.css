@@ -22,9 +22,19 @@ font-weight: bold;
 
     .nav-link.active {
         color: #ffc107 !important;
-        font-weight: bold;
-        border-bottom: 2px solid #ffc107;
+        border-bottom: 1px solid #ffc107;
     }
+      .nav-link {
+        font-weight: normal !important;
+    }
+    .datatables-actions {
+   width: 20%;
+min-width: 20%;
+display: grid;
+grid-gap: 10px;
+grid-template-columns: 70px 70px;
+    
+}
 
 /* bootstrap.min.css | https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css */
 
@@ -46,4 +56,16 @@ font-weight: bold;
 
 .tag {
     font-size: 12px;
+}
+.tag-link {
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+.tags {
+    display: flex;
+    padding: 1rem;
+    width: 100%;
+    flex-wrap: wrap;
+}
+.note-content{
 }

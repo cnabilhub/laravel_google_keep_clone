@@ -1,38 +1,57 @@
 @extends('layout.master')
 
+@section('page-title')
+Settings
+@endsection
+
 @section('section')
 <div class="container">
     <div class=" p-5">
 
-        <form class="form-signin" method="POST" action="{{route('auth.create')}}" enctype="multipart/form-data">
-            @csrf
+        <form class="form-signin" method="POST" action="" enctype="multipart/form-data">
 
+            @csrf
 
             <div class="row">
                 <div class="col-md-6">
 
+
                     <input name="name" type="text" id="inputEmail" class="form-control" placeholder="Name" required
-                        autofocus>
+                        autofocus value="{{Auth::user()->name}}">
+
                     <input name="email" type="email" id="inputEmail" class="form-control" placeholder="Email address"
-                        required>
+                        required value="{{Auth::user()->email}}">
+
+
                     <input name="password" type="password" id="inputPassword" class="form-control"
-                        placeholder="Password" required>
-                    <input name="password" type="password" id="inputPassword" class="form-control"
-                        placeholder="Password" required>
-                    <input name="password" type="password" id="inputPassword" class="form-control"
-                        placeholder="Password" required>
+                        placeholder="Old Password">
+
+                    <input name="new_password" type="password" id="inputPassword" class="form-control"
+                        placeholder="New Password">
+
+                    <input name="re_password" type="password" id="inputPassword" class="form-control"
+                        placeholder="Confirm Password">
 
                     <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit"><i
                             class="fas fa-user-edit"></i> Update</button>
                 </div>
                 <div class="col-md-6">
 
-                    <img src="{{asset('images/profiles/default.png')}}" alt="" class="mb-3 img-thumbnail" id="image">
+                    @if(Auth::user()->img_path !== null)
+
+                    <img class="mb-3 img-thumbnail" id="image"
+                        src="{{asset('/images/profiles/'.Auth::user()->img_path)}}">
+
+                    @else
+                    <img src="{{asset('/images/profiles/default.png')}}" class="mb-3 img-thumbnail" id="image">
+
+                    @endif ()
+
+                    <img src="{{asset('/images/profiles/'.Auth::user()->img_path)}}" alt="">
+
                     <input id="files" type="file" class="form-control mt-3 mb-3 img" alt="avatar" name="img">
                 </div>
             </div>
-
-
 
         </form>
 
@@ -94,9 +113,6 @@
         max-width: 300px;
     }
 </style>
-
-
-
 
 @endsection
 

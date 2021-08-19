@@ -5,8 +5,18 @@
 
     <div class="mt-2">
 
-        @yield('section')
+        <div class="card pb-3`">
+            <div class="card-header">
+                <h3>
 
+                    @yield('page-title')
+                </h3>
+            </div>
+            <div class="card-body">
+                @yield('section')
+
+            </div>
+        </div>
     </div>
 
 

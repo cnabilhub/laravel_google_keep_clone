@@ -23,9 +23,6 @@ class Note extends Migration
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('categories');
 
-            $table->unsignedBigInteger('tag_id')->nullable();
-            $table->foreign('tag_id')->references('id')->on('tags');
-
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
 

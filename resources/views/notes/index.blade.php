@@ -2,21 +2,22 @@
 @section('title')
 Google Keep Clone
 @endsection
+
+@section('page-title')
+Notes
+@endsection
+
 @section('section')
 <div class="container">
 
   <div class="row mb-4">
     <div class="bg-white p-3 d-flex justify-content-between align-items-center rounded">
+      @if ($data['notes']->count()>0)
 
-      <div class="bg-warning py-2 px-3 rounded shaddow">
-        Notes <span class="badge text-dark text-bold">({{$data['notes']->count() }})</span>
-      </div>
-
-      <div>
+      <div class="">
         Select Category
         <select id='cat' class="custom-select custom-select-md inline">
           <option selected value="">All</option>
-
           @foreach ($data['categories'] as $category)
           <option value="{{$category->id}}" @isset($data['selected']) @if($category->id == $data['selected']) selected
             @endif @endisset>
@@ -26,6 +27,7 @@ Google Keep Clone
 
         </select>
       </div>
+      @endif
       {{ $data['notes']->links() }}
     </div>
 
@@ -42,14 +44,15 @@ Google Keep Clone
           <h5 class="card-title">{{$note->title}}</h5>
 
 
-          <p class="card-text ">{!!\Illuminate\Support\Str::limit($note->content, 150, $end='...') !!}</p>
+          <div class="card-text note-content">{!!\Illuminate\Support\Str::limit($note->content, 150, $end='...') !!}
+          </div>
 
           <span class="card-subtitle mb-4 text-muted"><i class="far fa-clock"></i>
             {{\Carbon\Carbon::parse($note->updated_at)->diffForHumans()}} </span>
 
           <br>
-          <span class="card-subtitle ml-2 mb-4 text-muted"><i class="far fa-list-alt"></i>
-            {{$note->category->name}}</span>
+          <a href="/{{$note->category->id}}" class="card-subtitle ml-2 mb-4 text-muted"><i class="far fa-list-alt"></i>
+            {{$note->category->name}}</a>
 
 
           {{-- TAGS --}}
@@ -94,7 +97,7 @@ Google Keep Clone
   //  Auto change categories
   document.getElementById('cat').addEventListener('change',()=>{
   var cat = document.getElementById('cat').value;
-  cat = '/'+cat+'';
+  cat = '/categories/'+cat+'';
     window.location.href = cat;
 });
 

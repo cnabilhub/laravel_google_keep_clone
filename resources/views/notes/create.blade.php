@@ -3,10 +3,13 @@
 Add Note
 @endsection
 
+
+@section('page-title')
+Add Note
+@endsection
+
 @section('section')
 @if ($categories->count()>0)
-<h3> Add Note </h3>
-
 <div class="mb-3 mt-3">
   <form action="{{route('notes.store')}}" method="POST">
     @method('POST')
@@ -19,8 +22,8 @@ Add Note
   {{-- Categories --}}
   <div class="row mt-3 mb-2">
     <div class="col col-md-6">
-      <label for="exampleFormControlInput1" class="form-label"><i class="fas fa-list-alt"></i> Category :</label>
-      <select class="form-select" aria-label="Default select example" name="category_id">
+      <label for="exampleFormControlInput1" class="form-label"><i class="fas fa-list-alt"></i> Select Category :</label>
+      <select class="js-example-basic-single form-select" aria-label="Default select example" name="category_id">
 
         @foreach ($categories as $category)
         <option value="{{$category->id}}">{{$category->name}}</option>
@@ -30,7 +33,7 @@ Add Note
 
     {{-- TAGS --}}
     <div class="col col-md-6">
-      <label for="exampleFormControlInput1" class="form-label"><i class="fas fa-tags"></i> Tags :</label>
+      <label for="exampleFormControlInput1" class="form-label"><i class="fas fa-tags"></i> Mention Tags :</label>
       <select class="form-select js-example-basic-multiple " name="tags[]" multiple="multiple">
 
         @foreach ($tags as $tag)
@@ -80,6 +83,10 @@ selector: '#mytextarea',
 
 $(document).ready(function() {
 $('.js-example-basic-multiple').select2();
+});
+
+$(document).ready(function() {
+$('.js-example-basic-single').select2();
 });
 </script>
 @endsection

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use DataTables;
+
 
 class TagController extends Controller
 {
@@ -19,6 +21,28 @@ class TagController extends Controller
         $tags = Tag::where('user_id', '=', Auth::id())->paginate(6);
         $data['tags']  = $tags;
         return view('tags.index')->with($data);
+    }
+
+    public function getTags(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = Tag::where('user_id', '=', Auth::id())->latest()->get();
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $actionBtn = '
+                    <div class="datatables-actions">
+                    <a  href="javascript:void(0)" class="edit btn btn-success btn-sm">
+                    <i class="fas fa-edit"></i></a> 
+                    <a  href="javascript:void(0)" class="delete btn btn-danger btn-sm">
+                    <i class="fas fa-trash"></i></a>
+                    </div>
+                    ';
+                    return $actionBtn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
     }
 
     /**

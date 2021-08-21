@@ -46,7 +46,7 @@
 
           // Categories 
 
-          Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
+          Route::get('/categories/all', [CategoryController::class, 'index'])->name('categories');
           Route::get('/categories/list', [CategoryController::class, 'getCategories'])
                ->name('categories.list');
           Route::post('/categories/store', [CategoryController::class, 'store'])

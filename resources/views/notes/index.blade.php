@@ -19,10 +19,13 @@ Notes
         <select id='cat' class="custom-select custom-select-md inline">
           <option selected value="">All</option>
           @foreach ($data['categories'] as $category)
+          @if ($category->notes->count() != null)
+
           <option value="{{$category->id}}" @isset($data['selected']) @if($category->id == $data['selected']) selected
             @endif @endisset>
-            {{$category->name}}
+            {{$category->name}}({{$category->notes->count()}})
           </option>
+          @endif
           @endforeach
 
         </select>

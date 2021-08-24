@@ -17,7 +17,7 @@ Settings
 
 
                     <input name="name" type="text" id="inputEmail" class="form-control" placeholder="Name" required
-                        autofocus value="{{Auth::user()->name}}">
+                        value="{{Auth::user()->name}}">
 
                     <input name="email" type="email" id="inputEmail" class="form-control" placeholder="Email address"
                         required value="{{Auth::user()->email}}">

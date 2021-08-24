@@ -15,6 +15,7 @@ Add Note
     @method('POST')
     @csrf
     <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Title" name="title">
+
 </div>
 <div class="mb-3">
   <textarea class="form-control" id="mytextarea" rows="3" name="content"></textarea>

@@ -23,6 +23,8 @@
      Route::get('/login', [UserController::class, 'index'])->name('auth.login');
      Route::post('/login', [UserController::class, 'authenticate'])->name('auth.authenticate');
      Route::get('/register', [UserController::class, 'register'])->name('auth.register');
+     Route::post('/register', [UserController::class, 'create'])->name('auth.create');
+
 
 
      // Auth Register
@@ -34,7 +36,7 @@
 
           // HOME
 
-          Route::get('/categories/{cat?}', [NoteController::class, 'index'])->name('home')->where('cat', '^[0-9]');
+          Route::get('/{cat?}', [NoteController::class, 'index'])->name('home')->where('cat', '[0-9]+');;
 
 
           // notes

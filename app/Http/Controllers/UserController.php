@@ -33,7 +33,7 @@ class UserController extends Controller
     public function create(Request $request)
     {
         $user = $request->validate([
-            'email' => ['required', 'email'],
+            'email' => ['required', 'email', 'unique:users'],
             'name' => ['required'],
             'password' => ['required'],
             'img' => ['mimes:jpg,png', 'max:5048'],

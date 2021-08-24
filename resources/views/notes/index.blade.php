@@ -9,7 +9,6 @@ Notes
 
 @section('section')
 <div class="container">
-
   <div class="row mb-4">
     <div class="bg-white p-3 d-flex justify-content-between align-items-center rounded">
       @if ($data['notes']->count()>0)
@@ -100,7 +99,7 @@ Notes
   //  Auto change categories
   document.getElementById('cat').addEventListener('change',()=>{
   var cat = document.getElementById('cat').value;
-  cat = '/categories/'+cat+'';
+  cat = '/'+cat+'';
     window.location.href = cat;
 });
 

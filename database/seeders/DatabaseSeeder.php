@@ -18,13 +18,13 @@ class DatabaseSeeder extends Seeder
     {
 
         \App\Models\User::factory(1)->create();
-        \App\Models\Category::factory(10)->create();
-        \App\Models\Tag::factory(10)->create();
-        \App\Models\Note::factory(10)->create();
+        \App\Models\Category::factory(20)->create();
+        \App\Models\Tag::factory(20)->create();
+        \App\Models\Note::factory(20)->create();
 
 
 
-        for ($i = 1; $i <= 10; $i++) {
+        for ($i = 1; $i <= 20; $i++) {
             DB::table('note_tag')->insert([
                 'note_id' => Note::all()->random()->id,
                 'tag_id' => Tag::all()->random()->id,

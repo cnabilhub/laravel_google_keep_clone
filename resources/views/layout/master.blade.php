@@ -1,33 +1,38 @@
+<!DOCTYPE html>
+<html>
 @include('layout.head')
-@include('layout.header')
 
-<div class="container">
+<body>
 
-    <div class="mt-2">
+    @include('layout.header')
 
-        <div class="card pb-3`">
-            <div class="card-header">
-                <h3>
+    <div class="container">
 
-                    @yield('page-title')
-                </h3>
-            </div>
-            <div class="card-body">
-                @yield('section')
+        <div class="mt-2">
 
+            <div class="card pb-3`">
+                <div class="card-header">
+                    <h3>
+
+                        @yield('page-title')
+                    </h3>
+                </div>
+                <div class="card-body">
+                    @yield('section')
+
+                </div>
             </div>
         </div>
+
+
     </div>
 
+    @include('layout.script')
 
-</div>
+    {{-- toasrt errors  --}}
 
-@include('layout.script')
-
-{{-- toasrt errors  --}}
-
-<script>
-    // toastr Options 
+    <script>
+        // toastr Options 
 
     toastr.options = {
     "closeButton": true,
@@ -63,8 +68,9 @@
   		toastr.warning("{{ session('warning') }}");
   @endif
   
-</script>
-@yield('js')
+    </script>
+
+    @yield('js')
 </body>
 
 </html>

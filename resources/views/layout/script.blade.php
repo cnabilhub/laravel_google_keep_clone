@@ -9,7 +9,7 @@
  $('body').preloader();
 
  $( document ).ready(function() {
-$('body').preloader('remove')
+  $('body').preloader('remove')
 });
 </script>
 

@@ -12,14 +12,6 @@
 
 <body>
 
-
-
-    <!------ Include the above in your HEAD tag ---------->
-
-    <!--
-    you can substitue the span of reauth email for a input with the email and
-    include the remember me checkbox
-    -->
     <div class="container">
         <div class="card card-container rounded">
 
@@ -40,14 +32,14 @@
                     required>
 
                 <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Register</button>
-            </form><!-- /form -->
+            </form>
             <span>Alredy have account ? <a class="d-inline" href="{{route('auth.authenticate')}}"
                     class="forgot-password">
                     login
                 </a>
             </span>
-        </div><!-- /card-container -->
-    </div><!-- /container -->
+        </div>
+    </div>
 
     <style>
         body,

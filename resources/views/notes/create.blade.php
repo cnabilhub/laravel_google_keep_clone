@@ -5,7 +5,7 @@ Add Note
 
 
 @section('page-title')
-Add Note
+<i class="fas fa-plus-square"></i> Add Note
 @endsection
 
 @section('section')

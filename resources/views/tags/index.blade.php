@@ -5,7 +5,7 @@ Tags
 @endsection
 
 @section('page-title')
-Tags
+<i class="fas fa-tags"></i> Tags
 @endsection
 
 @section('section')

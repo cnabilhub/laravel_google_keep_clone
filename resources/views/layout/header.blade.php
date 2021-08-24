@@ -13,16 +13,15 @@
       <div class="navbar-nav d-flex justify-content-between align-items-center">
 
         <a class="nav-link {{Route::currentRouteName() == 'home' ? 'active' : '' }}" href="{{route('home')}}">
-          <i class="fas fa-home"></i> Home </a>
+          Home </a>
 
         <a class="nav-link {{Route::currentRouteName() == 'notes.create' ? 'active' : '' }}"
-          href="{{route('notes.create')}}"><i class="fas fa-plus-square"></i> Add Note</a>
+          href="{{route('notes.create')}}"> Add Note</a>
 
         <a class="nav-link {{Route::currentRouteName() == 'categories' ? 'active' : '' }}"
-          href="{{route('categories')}}"><i class="fas fa-list-alt"></i> Categories</a>
+          href="{{route('categories')}}"> Categories</a>
 
-        <a class="nav-link {{Route::currentRouteName() == 'tags' ? 'active' : '' }}" href="{{route('tags')}}"><i
-            class="fas fa-tags"></i> Tags</a>
+        <a class="nav-link {{Route::currentRouteName() == 'tags' ? 'active' : '' }}" href="{{route('tags')}}"> Tags</a>
 
         <div class="px-2"></div>
 
@@ -51,7 +50,7 @@
             <a class="dropdown-item" href="{{route('auth.settings')}}">
               <i class="fas fa-user"></i> Setting</a>
 
-            <a class="dropdown-item text-danger" href="{{route('auth.logout')}}">
+            <a class="dropdown-item alert-danger" href="{{route('auth.logout')}}">
               <i class="fas fa-sign-out-alt"></i>
               Logout</a>
           </div>
@@ -61,3 +60,5 @@
     </div>
   </div>
 </nav>
+
+<div class="p2 pil" style="background-color: red"></div>

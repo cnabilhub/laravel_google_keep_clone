@@ -40,7 +40,10 @@ class TagController extends Controller
                     ';
                     return $actionBtn;
                 })
-                ->rawColumns(['action'])
+                ->editColumn('color', function (Tag $tag) {
+                    return '<div class="p2  color" style="background-color: ' . $tag->color . '"></div>';
+                })
+                ->rawColumns(['action', 'color'])
                 ->make(true);
         }
     }

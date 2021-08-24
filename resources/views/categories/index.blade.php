@@ -5,7 +5,7 @@ Categories
 @endsection
 
 @section('page-title')
-Categories
+<i class="fas fa-list-alt"></i> Categories
 @endsection
 
 @section('section')

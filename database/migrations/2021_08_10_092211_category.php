@@ -17,8 +17,8 @@ class Category extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('desc');
-            $table->foreignId('user_id');
+            $table->string('desc')->nullable();
+            $table->foreignId('user_id')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Error;
 use App\Models\Tag;
 use App\Models\Note;
 use App\Models\Category;
-use Error;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class NoteController extends Controller
 {
@@ -50,6 +51,7 @@ class NoteController extends Controller
     public function store(Request $request)
     {
 
+
         try {
 
 
@@ -71,10 +73,12 @@ class NoteController extends Controller
             $note->tags()->attach($request->tags);
             $note->save();
 
-            return redirect()->route('notes.create')->with('message', 'Note created Successfully 👍');
+            return redirect()->route('notes.create')
+                ->with('message', 'Note created Successfully 👍');
         } catch (\Exception $e) {
 
-            return redirect()->route('notes.create')->with('error', $e->getMessage());
+            return redirect()->route('notes.create')->with('error', $e->getMessage())
+                ->with('error', '😕 Something went wrong, check fields and retry , ');
         }
     }
 
@@ -98,11 +102,15 @@ class NoteController extends Controller
     public function destroy(Request $request)
     {
         try {
+            // check if note exist 
             $toDelete = Note::findOrfail($request->id);
+
+            // check if this user is the ouner of this note
             if ($toDelete->user_id == Auth::id()) {
                 $toDelete->delete();
             } else {
-                throw new Error('sometings went wroooong');
+
+                return redirect()->route('home')->with(['error' => 'You my not the ouner of this note ']);
             }
             return redirect()->route('home')->with(['message' => 'Note deleted successfuly !']);
         } catch (\Throwable $e) {

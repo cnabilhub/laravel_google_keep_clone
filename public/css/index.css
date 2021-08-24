@@ -23,12 +23,12 @@ font-weight: bold;
     }
 
     a.nav-link:hover {
-        color: #ffc107 !important;
+color: #886703 !important;
     }
 
     .nav-link.active {
-        color: #ffc107 !important;
-        border-bottom: 1px solid #ffc107;
+color: #886703 !important;
+border-bottom: 1px solid #886703;
     }
       .nav-link {
         font-weight: normal !important;

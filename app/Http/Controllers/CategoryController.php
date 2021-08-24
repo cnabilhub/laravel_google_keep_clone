@@ -2,24 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use DataTables;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use DataTables;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // Category page 
     public function index()
     {
         //
         return view('categories.index');
     }
-
+    // get categories by ajax for datatables 
     public function getCategories(Request $request)
     {
         if ($request->ajax()) {
@@ -29,10 +26,14 @@ class CategoryController extends Controller
                 ->addColumn('action', function ($row) {
                     $actionBtn = '
                     <div class="datatables-actions">
-                    <a  href="javascript:void(0)" class="edit btn btn-success btn-sm">
-                    <i class="fas fa-edit"></i></a> 
-                    <a  href="javascript:void(0)" class="delete btn btn-danger btn-sm">
-                    <i class="fas fa-trash"></i></a>
+                      <button  onClick="edititem(' . $row->id . ');" value="' . $row->id . '" class="delete btn btn-success btn-sm">
+                    <i class="fas fa-edit"></i>  <div class="d-none loading-action spinner-border spinner-border-sm" role="status"> <span class="sr-only"></span>
+                    </div></button>
+
+                     
+                    <button  onClick="deleteitem(' . $row->id . ');" value="' . $row->id . '" class="delete btn btn-danger btn-sm">
+                    <i class="fas fa-trash"></i>  <div class="d-none loading-action spinner-border spinner-border-sm" role="status"> <span class="sr-only"></span>
+                    </div></button>
                     </div>
                     ';
                     return $actionBtn;
@@ -42,30 +43,18 @@ class CategoryController extends Controller
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         try {
             //Validation
 
             $request->validate([
-                'name' => 'required|max:50',
+                'name' => 'required|unique:categories|max:50',
                 'desc' => 'max:50',
             ]);
 
@@ -75,11 +64,13 @@ class CategoryController extends Controller
                 'desc' => $request->desc,
                 'user_id' => Auth::id(),
             ])->save();
-
-            return redirect()->route('categories')->with(['message' => 'Category created succesfuly']);
+            return response()->json([
+                'message' => 'Category created succesfuly',
+            ]);
         } catch (\Exception $e) {
-
-            return redirect()->route('categories')->with(['error' => $e->getMessage()]);
+            return response()->json([
+                'error' => $e->getMessage(),
+            ]);
         }
     }
 
@@ -105,26 +96,81 @@ class CategoryController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+
+    public function update(Request $request)
     {
-        //
+        try {
+
+            $category_exist = Category::findOrfail($request->id);
+
+            if ($category_exist) {
+                //  validate request   
+                $request->validate([
+                    'name' => 'required|max:50',
+                    'desc' => 'max:191',
+                ]);
+                $category_exist->name = $request->name;
+                $category_exist->desc = $request->desc;
+                $category_exist->save();
+            }
+
+            return response()->json([
+                'message' => 'Category created succesfuly',
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage(),
+            ]);
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+
+    public function destroy(Request $request)
     {
-        //
+        if ($request->ajax()) {
+            try {
+                $category_exist = Category::findOrfail($request->id);
+                if ($category_exist && $category_exist->user_id == Auth::id()) {
+                    $category_exist->delete();
+                    return response()->json([
+                        'message' => 'Category Deleted succesfuly',
+                    ]);
+                } else {
+                    return response()->json([
+                        'error' => 'someting went wrong',
+                    ]);
+                }
+            } catch (\Exception $e) {
+                return response()->json([
+                    'error' => $e->getMessage(),
+                ]);
+            }
+        }
+    }
+
+    public function getCategory(Request $request)
+    {
+        if ($request->ajax()) {
+            try {
+                $category_exist = Category::findOrfail($request->id);
+                if ($category_exist && $category_exist->user_id == Auth::id()) {
+                    return response()->json([
+                        'message' => [
+                            'id' =>  $category_exist->id,
+                            'name' =>  $category_exist->name,
+                            'desc' =>  $category_exist->desc,
+                        ]
+                    ]);
+                } else {
+                    return response()->json([
+                        'error' => 'someting went wrong',
+                    ]);
+                }
+            } catch (\Exception $e) {
+                return response()->json([
+                    'error' => $e->getMessage(),
+                ]);
+            }
+        }
     }
 }

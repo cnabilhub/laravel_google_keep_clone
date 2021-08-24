@@ -35,6 +35,12 @@ Route::middleware(['auth'])->group(function () {
      Route::get('/categories/list', [CategoryController::class, 'getCategories'])->name('categories.list');
      Route::post('/categories/store', [CategoryController::class, 'store'])->name('categories.store');
 
+     Route::delete('/categories/{id?}', [CategoryController::class, 'destroy'])->name('categories.destroy')->where('id', '[0-9]+');
+
+     Route::get('/categories/ajax/{id?}', [CategoryController::class, 'getCategory'])->name('getCategory.ajax')->where('id', '[0-9]+');
+
+     Route::put('/categories/update/ajax/{id?}', [CategoryController::class, 'update'])->name('category.update')->where('id', '[0-9]+');
+
 
      // Tags 
      Route::get('/tags', [TagController::class, 'index'])->name('tags');

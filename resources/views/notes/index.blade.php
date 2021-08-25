@@ -49,13 +49,14 @@ Google Keep Clone
             {!!\Illuminate\Support\Str::limit($note->content, 180, $end='...') !!}
           </div>
 
-          <span class="card-subtitle mb-2"><i class="far fa-clock"></i>
-            {{\Carbon\Carbon::parse($note->updated_at)->diffForHumans()}} </span>
-
-          <br>
           <a href="/{{$note->category->id}}" class="card-subtitle ml-2 mb-4">
             <i class="far fa-list-alt"></i>
             {{$note->category->name}}</a>
+
+          <br>
+
+
+
 
 
           {{-- TAGS --}}
@@ -72,15 +73,22 @@ Google Keep Clone
           <div class="dropdown-divider mt-3 mb-3"></div>
 
           <div class="mt-2 mb2 actions d-flex justify-space-between">
-            <button class="btn btn-sm btn-success rounded mx-2 copy" data-id="{{$note->id}}"> <i
+
+            <button class="btn btn-sm btn-secondary  rounded mx-1"> <i class="fas fa-eye"></i></button>
+            <button class="btn btn-sm btn-warning  rounded mx-1"> <i class="fas fa-edit"></i></button>
+
+            <button class="btn btn-sm btn-success rounded mx-1 copy" onclick="copy({{$note->id}})"> <i
                 class="fas fa-clipboard"></i>
-              Copy </button>
+            </button>
             <form action="{{route('notes.destroy')}}" method="POST">
               @csrf
               <input type="hidden" name='id' value="{{$note->id}}">
-              <button type="submit" class="btn btn-sm btn-danger rounded mx-2"><i class="fas fa-trash"></i>
-                Delete</button>
+              <button type="submit" class="btn btn-sm btn-danger rounded mx-1 h-100"><i class="fas fa-trash"></i>
+              </button>
             </form>
+
+            <span class="card-subtitle mb-2 mt-1 mx-2"><i class="far fa-clock"></i>
+              {{\Carbon\Carbon::parse($note->updated_at)->diffForHumans()}} </span>
           </div>
         </div>
 
@@ -102,23 +110,13 @@ cat = '/'+cat+'';
 window.location.href = cat;
 });
 
-// 
-btn = document.querySelectorAll('.copy').forEach((btn)=>{
-btn.addEventListener('click',(e)=>{
-
-id = e.target.dataset.id;
-console.log(id);
-copy(id)
-})
-});
-
 function copy(id) {
 var copyText = document.querySelector(`.note-${id}`);
 copyText.select();
 copyText.setSelectionRange(0, 99999)
 document.execCommand("copy");
 
-toastr.success("Text copied")
+Toast.fire({ icon: 'success', title: "Text copied" })
 }
 
 

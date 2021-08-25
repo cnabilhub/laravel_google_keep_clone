@@ -11,11 +11,11 @@
         <div class="mt-2">
 
             <div class="card pb-3`">
-                <div class="card-header">
-                    <h3>
+                <div class="card-header bg-warning p-3">
+                    <h5>
 
                         @yield('page-title')
-                    </h3>
+                    </h5>
                 </div>
                 <div class="card-body">
                     @yield('section')
@@ -32,41 +32,35 @@
     {{-- toasrt errors  --}}
 
     <script>
-        // toastr Options 
+        // Swal Options 
 
-    toastr.options = {
-    "closeButton": true,
-    "debug": false,
-    "newestOnTop": false,
-    "progressBar": true,
-    "positionClass": "toast-bottom-right",
-    "preventDuplicates": false,
-    "onclick": null,
-    "showDuration": "00",
-    "hideDuration": "1000",
-    "timeOut": "5000",
-    "extendedTimeOut": "1000",
-    "showEasing": "swing",
-    "hideEasing": "linear",
-    "showMethod": "fadeIn",
-    "hideMethod": "fadeOut"
-    }
+const Toast = Swal.mixin({
+toast: true,
+position: 'bottom-end',
+showConfirmButton: false,
+timer: 3000,
+timerProgressBar: true,
+didOpen: (toast) => {
+toast.addEventListener('mouseenter', Swal.stopTimer)
+toast.addEventListener('mouseleave', Swal.resumeTimer)
+}
+})
 
   @if(Session::has('message'))
-  		toastr.success("{{ session('message') }}");
+        Toast.fire({
+        icon: 'success',
+        title: "{{ session('message') }}"
+        })
   @endif
 
   @if(Session::has('error'))
-  		toastr.error("{{ session('error') }}");
+        Toast.fire({
+        icon: 'error',
+        title: "{{ session('error') }}"
+        })
+
   @endif
 
-  @if(Session::has('info'))
-  		toastr.info("{{ session('info') }}");
-  @endif
-
-  @if(Session::has('warning'))
-  		toastr.warning("{{ session('warning') }}");
-  @endif
   
     </script>
 

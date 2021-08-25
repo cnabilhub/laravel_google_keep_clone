@@ -101,3 +101,6 @@ grid-template-columns: 70px 70px;
     height: 20px;
     border-radius: 10rem;
 }
+.bg-warning, .btn-warning {
+    background: #f6b62e !important;
+}

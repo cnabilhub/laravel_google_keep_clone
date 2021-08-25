@@ -65,7 +65,7 @@ class CategoryController extends Controller
                 'user_id' => Auth::id(),
             ])->save();
             return response()->json([
-                'message' => 'Category created succesfuly',
+                'message' => 'Category created ',
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -115,7 +115,7 @@ class CategoryController extends Controller
             }
 
             return response()->json([
-                'message' => 'Category created succesfuly',
+                'message' => 'Category Updated ',
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -133,7 +133,7 @@ class CategoryController extends Controller
                 if ($category_exist && $category_exist->user_id == Auth::id()) {
                     $category_exist->delete();
                     return response()->json([
-                        'message' => 'Category Deleted succesfuly',
+                        'message' => 'Category Deleted ',
                     ]);
                 } else {
                     return response()->json([

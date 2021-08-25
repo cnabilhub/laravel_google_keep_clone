@@ -51,7 +51,7 @@ Add Note
 
 
 
-  <button type="submit" class="btn btn-warning btn-lg mt-4"><i class="fas fa-save"></i> Create note</button>
+  <button type="submit" class="btn btn-warning  mt-4"><i class="fas fa-save"></i> Create note</button>
 
 
   </form>

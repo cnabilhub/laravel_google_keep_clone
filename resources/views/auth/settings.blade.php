@@ -1,7 +1,7 @@
 @extends('layout.master')
 
 @section('page-title')
-Settings
+<i class="fas fa-cog"></i> Settings
 @endsection
 
 @section('section')

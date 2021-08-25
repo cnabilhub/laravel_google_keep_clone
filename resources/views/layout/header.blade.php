@@ -48,7 +48,7 @@
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <a class="dropdown-item" href="{{route('auth.settings')}}">
-              <i class="fas fa-user"></i> Setting</a>
+              <i class="fas fa-cog"></i> Setting</a>
 
             <a class="dropdown-item btn-outline-danger" href="{{route('auth.logout')}}">
               <i class="fas fa-sign-out-alt"></i>

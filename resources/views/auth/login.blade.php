@@ -37,9 +37,9 @@
     </div>
 
     <style>
-        body,
-        html {
-            height: 100%;
+        body {
+            width: 100%;
+            height: 100vh;
             background-repeat: no-repeat;
             background-image: linear-gradient(rgb(255, 207, 21), rgb(200, 159, 0));
         }
@@ -47,6 +47,7 @@
         .card-container.card {
             max-width: 350px;
             padding: 40px 40px;
+            margin-top: 10%;
         }
 
         .card {

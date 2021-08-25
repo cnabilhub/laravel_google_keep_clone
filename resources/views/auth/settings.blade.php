@@ -2,6 +2,9 @@
 
 @section('page-title')
 <i class="fas fa-cog"></i> Settings
+
+
+
 @endsection
 
 @section('section')

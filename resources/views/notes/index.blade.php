@@ -15,9 +15,9 @@ Google Keep Clone
     <div class="bg-white p-3 d-flex justify-content-between align-items-center rounded">
       @if ($data['notes']->count()>0)
 
-      <div class="">
-        Select Category
-        <select id='cat' class="custom-select custom-select-md inline">
+      <div class="cat-selector">
+        <span class="d-flex">Select Category </span>
+        <select id='cat' class="form-control d-inline">
           <option selected value="">All</option>
           @foreach ($data['categories'] as $category)
           @if ($category->notes->count() != null)
@@ -30,6 +30,7 @@ Google Keep Clone
           @endforeach
 
         </select>
+
       </div>
       @endif
       {{ $data['notes']->links() }}

@@ -35,10 +35,21 @@ Categories
           <form class='add-form' action="{{route('categories.store')}}" method="POST" class=" p-3">
             @csrf
             <label for="exampleFormControlInput1" class="form-label">Name :</label>
-            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="" name="name">
+            <input type="text" class="form-control @error('name') is-invalid @enderror" id="exampleFormControlInput1"
+              placeholder="" name="name">
+
+            <div class="name-error text-danger"></div>
+
             <label for="exampleFormControlInput1" class="form-label">Description :</label>
-            <textarea type="text" class="form-control" id="exampleFormControlInput1" placeholder=""
-              name="desc"></textarea>
+            <textarea type="text" class="form-control @error('desc') is-invalid @enderror" id="exampleFormControlInput1"
+              placeholder="" name="desc"></textarea>
+            <div class="desc-error text-danger"></div>
+
+            @error('desc')
+            <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+
+
             <div class="mt-3">
               <button type="submit" class="btn btn-warning save">
                 <i class="fas fa-save icon"></i>
@@ -116,26 +127,43 @@ columns: [
 // ADD ITEM
 
 $('.add-form').on('submit', function (e) {
-e.preventDefault()
-var form_data = $(this).serialize();
-$('.loading').removeClass('d-none');
-$('.icon').addClass('d-none');
-$.ajax({
-url: this.action,
-type: this.method,
-data: form_data
-}).done(function (server_data) {
-var table = $('.yajra-datatable').DataTable()
-if (server_data.message) {
-Toast.fire({ icon: 'success', title: server_data.message })
-table.ajax.reload();
+  e.preventDefault()
+  var form_data = $(this).serialize();
+  $('.name-error').text('')
+  $('.desc-error').text('')
+  $('.loading').removeClass('d-none');
+  $('.icon').addClass('d-none');
+  $.ajax({
+  url: this.action,
+  type: this.method,
+  data: form_data
+  }).done(function (server_data) {
+  var table = $('.yajra-datatable').DataTable()
+  if (server_data.message) {
+  Toast.fire({ icon: 'success', title: server_data.message })
+  table.ajax.reload();
+  }
+  if (server_data.errors) { 
+
+if(server_data.errors.name){
+  $('.name-error').text(server_data.errors.name[0])
+  $('.name-error').removeClass('d-none');
 }
-if (server_data.error) { Toast.fire({ icon: 'error', title: server_data.error }) }
-$('.icon').removeClass('d-none');
-$('.loading').addClass('d-none');
-}).fail(function (jqXHR, textStatus, errorThrown) {
-Toast.fire({ icon: 'error', title: 'Somting went wrong in the server' })
-})
+
+if(server_data.errors.desc){
+
+$('.desc-error').text(server_data.errors.desc[0])
+$('.desc-error').removeClass('d-none');
+
+
+}
+
+    }
+  $('.icon').removeClass('d-none');
+  $('.loading').addClass('d-none');
+  }).fail(function (jqXHR, textStatus, errorThrown) {
+  Toast.fire({ icon: 'error', title: 'Somting went wrong in the server' })
+  })
 });
 
 
@@ -171,10 +199,10 @@ function deleteitem(id) {
     
     if (server_data.error) {
     
-    Toast.fire({
-    icon: 'error',
-    title: server_data.error
-    })
+      Toast.fire({
+      icon: 'error',
+      title: server_data.error
+      })
     
     }
     
@@ -255,10 +283,24 @@ $('.modal').modal('hide');
 
 if (server_data.error) {
 
+let errorsString = [ ]
+if(server_data.error.name){
+server_data.error.name.map((error)=>{
+  errorsString.push(error)
+})
+}
+
+errorsString.push('<br>')
+if(server_data.error.desc){
+server_data.error.desc.map((error)=>{
+errorsString.push(error)
+})
+}
+
 
 Toast.fire({
 icon: 'error',
-title: server_data.error
+title: errorsString
 })
 
 $('.modal').modal('hide');

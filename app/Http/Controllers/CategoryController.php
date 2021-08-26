@@ -7,6 +7,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class CategoryController extends Controller
 {
@@ -50,6 +51,7 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
+
         try {
             //Validation
 
@@ -57,7 +59,6 @@ class CategoryController extends Controller
                 'name' => 'required|unique:categories|max:50',
                 'desc' => 'max:50',
             ]);
-
 
             $dataTosend = Category::create([
                 'name' => $request->name,
@@ -67,30 +68,19 @@ class CategoryController extends Controller
             return response()->json([
                 'message' => 'Category created ',
             ]);
-        } catch (\Exception $e) {
+        } catch (ValidationException $exception) {
             return response()->json([
-                'error' => $e->getMessage(),
+                'errors' => $exception->errors(),
             ]);
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         //
@@ -117,9 +107,10 @@ class CategoryController extends Controller
             return response()->json([
                 'message' => 'Category Updated ',
             ]);
-        } catch (\Exception $e) {
+        } catch (ValidationException $exception) {
+
             return response()->json([
-                'error' => $e->getMessage(),
+                'error' => $exception->errors(),
             ]);
         }
     }

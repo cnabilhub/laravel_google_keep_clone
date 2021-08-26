@@ -11,14 +11,25 @@ Add Note
 @section('section')
 @if ($categories->count()>0)
 <div class="mb-3 mt-3">
+  @if ($errors->any())
+  <div class="alert alert-danger">
+    <ul>
+      @foreach ($errors->all() as $error)
+      <li>{{ $error }}</li>
+      @endforeach
+    </ul>
+  </div>
+  @endif
   <form action="{{route('notes.store')}}" method="POST">
     @method('POST')
     @csrf
-    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Title" name="title">
+    <input type="text" class="form-control @error('title') is-invalid @enderror" id="exampleFormControlInput1"
+      placeholder="Title" name="title">
 
 </div>
 <div class="mb-3">
-  <textarea class="form-control" id="mytextarea" rows="3" name="content"></textarea>
+  <textarea class="form-control @error('content') is-invalid @enderror" id="mytextarea" rows="3"
+    name="content"></textarea>
 
   {{-- Categories --}}
   <div class="row mt-3 mb-2">

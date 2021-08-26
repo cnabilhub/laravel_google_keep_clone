@@ -52,34 +52,27 @@ class NoteController extends Controller
     {
 
 
-        try {
+        //Validation
+        $data = $request->validate([
+            'title' => 'bail|required|max:191',
+            'content' => 'bail|required|max:1000',
+            'category_id' => 'bail|integer',
+        ], [
+            'title.required' => 'Note title is required ',
+            'title.max' => 'Note title cannot me more than :max caracter ',
+            'title.required' => 'Note title is required ',
+        ]);
+
+        // Append authentificated user id 
+        $data['user_id'] = Auth::id();
+        // Create note
+        $note = Note::create($data);
+        $note->tags()->attach($request->tags);
+        $note->save();
 
 
-            //Validation
-            $data = $request->validate([
-                'title' => 'required|max:191',
-                'content' => 'required|max:1000',
-                'category_id' => 'integer',
-            ], [
-                'title.required' => 'Note title is required ',
-                'title.max' => 'Note title cannot me more than :max caracter ',
-                'title.required' => 'Note title is required ',
-            ]);
-
-            // Append authentificated user id 
-            $data['user_id'] = Auth::id();
-
-            $note = Note::create($data);
-            $note->tags()->attach($request->tags);
-            $note->save();
-
-            return redirect()->route('notes.create')
-                ->with('message', 'Note created Successfully 👍');
-        } catch (\Exception $e) {
-
-            return redirect()->route('notes.create')->with('error', $e->getMessage())
-                ->with('error', '😕 Something went wrong, check fields and retry , ');
-        }
+        return redirect()->route('notes.create')
+            ->with('message', 'Note created Successfully 👍');
     }
 
 

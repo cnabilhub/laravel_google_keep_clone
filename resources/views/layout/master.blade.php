@@ -65,6 +65,7 @@ toast.addEventListener('mouseleave', Swal.resumeTimer)
     </script>
 
     @yield('js')
+    @include('layout.footer')
 </body>
 
 </html>

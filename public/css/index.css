@@ -104,3 +104,40 @@ grid-template-columns: 70px 70px;
 .bg-warning, .btn-warning {
     background: #f6b62e !important;
 }
+
+.nav-container {
+    width: 100%;
+    display: flex !important;
+    justify-content: space-between;
+}
+
+@media only screen and (max-width: 600px) {
+ .nav-container {
+    width: 100%;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: space-between;
+  }
+
+  .nav-container div{
+  
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+}
+
+
+  .btn-action {
+    min-width: 30px !important;
+    min-height: 30px !important;
+    height: 30px !important;
+    padding: 14px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    max-width: 30px !important;
+    max-height: 30px !important;
+    margin: 4px;
+}

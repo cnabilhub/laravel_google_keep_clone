@@ -22,12 +22,17 @@ Route::middleware(['auth'])->group(function () {
 
 
      // HOME
-     Route::get('/{cat?}', [NoteController::class, 'index'])->name('home')->where('cat', '[0-9]+');
+     Route::get('/{cat?}/{term?}', [NoteController::class, 'index'])->name('home')->where('cat', '[0-9]+');
 
      // notes
      Route::get('/notes/create', [NoteController::class, 'create'])->name('notes.create');
      Route::post('/notes/store', [NoteController::class, 'store'])->name('notes.store');
-     Route::post('/notes/destroy', [NoteController::class, 'destroy'])->name('notes.destroy');
+     Route::delete('/notes/destroy', [NoteController::class, 'destroy'])->name('notes.destroy');
+     Route::get('/notes/{id}/', [NoteController::class, 'show'])->name('notes.show')->where('id', '[0-9]+');
+
+     Route::get('/notes/edit/{id}', [NoteController::class, 'edit'])->name('notes.edit')->where('id', '[0-9]+');
+
+     Route::post('/notes/update/{id}', [NoteController::class, 'update'])->name('notes.update')->where('id', '[0-9]+');
 
 
      // Categories 

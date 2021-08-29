@@ -4,27 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use DataTables;
-
+use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Validation\ValidationException;
 
 class TagController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // Tag page 
     public function index()
     {
-        //
-        $tags = Tag::where('user_id', '=', Auth::id())->paginate(6);
-        $data['tags']  = $tags;
-        return view('tags.index')->with($data);
+        return view('Tags.index');
     }
 
+    // get Tags by ajax for datatables 
     public function getTags(Request $request)
     {
+        // check if request by ajax
         if ($request->ajax()) {
             $data = Tag::where('user_id', '=', Auth::id())->latest()->get();
             return Datatables::of($data)
@@ -32,98 +28,144 @@ class TagController extends Controller
                 ->addColumn('action', function ($row) {
                     $actionBtn = '
                     <div class="datatables-actions">
-                    <a  href="' . $row->id . '" class="edit btn btn-success btn-sm">
-                    <i class="fas fa-edit"></i></a> 
-                    <a  href="javascript:void(0)" class="delete btn btn-danger btn-sm">
-                    <i class="fas fa-trash"></i></a>
+                      <button  onClick="edititem(' . $row->id . ');" value="' . $row->id . '" class="delete btn btn-success btn-sm">
+                    <i class="fas fa-edit"></i>  <div class="d-none loading-action spinner-border spinner-border-sm" role="status"> <span class="sr-only"></span>
+                    </div></button>
+
+                     
+                    <button  onClick="deleteitem(' . $row->id . ');" value="' . $row->id . '" class="delete btn btn-danger btn-sm">
+                    <i class="fas fa-trash"></i>  <div class="d-none loading-action spinner-border spinner-border-sm" role="status"> <span class="sr-only"></span>
+                    </div></button>
                     </div>
                     ';
                     return $actionBtn;
-                })
-                ->editColumn('color', function (Tag $tag) {
+                })->editColumn('color', function (Tag $tag) {
                     return '<div class="p2  color" style="background-color: ' . $tag->color . '"></div>';
-                })
-                ->rawColumns(['action', 'color'])
+                })->rawColumns(['action', 'color'])
                 ->make(true);
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         try {
-
-            $data = $request->validate([
-                'name' => 'required|max:50',
-                'color' => 'required|max:1000',
+            $request->validate([
+                'name' => 'required|unique:Tags|max:50',
+                'color' => 'max:50',
             ]);
-            $data['user_id'] = Auth::id();
 
-            Tag::create($data)->save();
-            return redirect()->route('tags')->with(['message' => 'Task created successful!']);
-        } catch (\Throwable $th) {
-            //throw $th;
-            return redirect()->route('tags')->with(['error' => $th->getMessage()]);
+            $dataTosend = Tag::create([
+                'name' => $request->name,
+                'color' => $request->color,
+                'user_id' => Auth::id(),
+            ])->save();
+
+            if ($dataTosend) {
+                return response()->json([
+                    'message' => 'Tag created ',
+                ]);
+            } else {
+
+                return response()->json([
+                    'errors' => 'Error happend when saving Tag',
+                ]);
+            }
+        } catch (ValidationException $exception) {
+            return response()->json([
+                'errors' => $exception->errors(),
+            ]);
+        }
+
+    }
+
+
+    public function update(Request $request)
+    {
+
+        try {
+
+            $Tag_exist = Tag::findOrfail($request->id);
+
+            if ($Tag_exist) {
+
+                //  validate request   
+                $request->validate([
+                    'name' => 'required|max:50',
+                    'color' => 'max:191',
+                ]);
+                $Tag_exist->name = $request->name;
+                $Tag_exist->color = $request->color;
+                $Tag_exist->save();
+
+                return response()->json([
+                    'message' => 'Tag Updated ',
+                ]);
+            } else {
+
+                return response()->json([
+                    'error' => 'This Tag dont exist !'
+                ]);
+            }
+        } catch (ValidationException $exception) {
+
+            return response()->json([
+                'error' => $exception->errors(),
+            ]);
+        } 
+
+
+
+    }
+
+
+    public function destroy(Request $request)
+    {
+        if ($request->ajax()) {
+
+            $Tag_exist = Tag::findOrfail($request->id);
+            if ($Tag_exist && $Tag_exist->user_id == Auth::id()) {
+                $Tag_exist->delete();
+                return response()->json([
+                    'message' => 'Tag Deleted ',
+                ]);
+            } else {
+                return response()->json([
+                    'error' => 'someting went wrong',
+                ]);
+            }
+            if (!$Tag_exist) {
+
+                return response()->json([
+                    'error' => 'Tag not found',
+                ]);
+            }
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function getTag(Request $request)
     {
-        //
-    }
+        if ($request->ajax()) {
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+            $Tag_exist = Tag::findOrfail($request->id);
+            if ($Tag_exist && $Tag_exist->user_id == Auth::id()) {
+                return response()->json([
+                    'message' => [
+                        'id' =>  $Tag_exist->id,
+                        'name' =>  $Tag_exist->name,
+                        'color' =>  $Tag_exist->color,
+                    ]
+                ]);
+            } else {
+                return response()->json([
+                    'error' => 'someting went wrong',
+                ]);
+            }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+            if (!$Tag_exist) {
+                return response()->json([
+                    'error' => 'Tag not found',
+                ]);
+            }
+        }
     }
 }

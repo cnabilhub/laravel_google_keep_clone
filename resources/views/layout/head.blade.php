@@ -25,6 +25,9 @@
  {{-- dataTables --}}
  <link href="{{asset('/css/bootstrap.min.css')}}" rel="stylesheet">
 
+ {{-- spectrum --}}
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/spectrum-colorpicker2/dist/spectrum.min.css">
+
  <link rel="stylesheet" href="{{asset('/css/index.css')}}">
  <link rel="stylesheet" href="{{asset('/css/all.css')}}">
 

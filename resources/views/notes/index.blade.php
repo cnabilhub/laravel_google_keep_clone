@@ -14,7 +14,9 @@
 
     <div class="container">
         <div class="row mb-4">
-            <div class="bg-white p-3 d-flex justify-content-between align-items-center rounded">
+            <div class="col-md-6 d-flex  align-items-center ">
+
+                            <div class="bg-white p-3 d-flex justify-content-between align-items-center rounded">
                 @if ($data['notes']->count() > 0)
 
                     <div class="cat-selector">
@@ -33,9 +35,13 @@
                 </select>
 
             </div>
+
+            </div>
+           
+
             @endif
-            {{ $data['notes']->links() }}
         </div>
+      
 
     </div>
 
@@ -102,6 +108,12 @@
             @include('layout.empty')
         @endforelse
 
+          <div class="row p-3 bg-light">
+               <div class="col-md-12 d-flex justify-content-end align-items-center ">
+                {{ $data['notes']->links() }}
+            </div>
+          </div>
+
     </div>
     </div>
     @section('js')
@@ -109,16 +121,12 @@
 
         <script>
 
-
             //  Auto change categories
             if(document.getElementById('cat')){
             document.getElementById('cat').addEventListener('change', () => {
                         searchAndFilter()
                         });
             }
-         
-
-         
 
             function copy(id) {
                 var copyText = document.querySelector(`.note-${id}`);

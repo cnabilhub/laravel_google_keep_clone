@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use DataTables;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Validation\ValidationException;
 
 class CategoryController extends Controller
@@ -14,12 +14,13 @@ class CategoryController extends Controller
     // Category page 
     public function index()
     {
-        //
         return view('categories.index');
     }
+
     // get categories by ajax for datatables 
     public function getCategories(Request $request)
     {
+        // check if request by ajax
         if ($request->ajax()) {
             $data = Category::where('user_id', '=', Auth::id())->latest()->get();
             return Datatables::of($data)
@@ -44,14 +45,8 @@ class CategoryController extends Controller
         }
     }
 
-    public function create()
-    {
-        //
-    }
-
     public function store(Request $request)
     {
-
         try {
             //Validation
 
@@ -73,17 +68,7 @@ class CategoryController extends Controller
                 'errors' => $exception->errors(),
             ]);
         }
-    }
-
-
-    public function show($id)
-    {
-        //
-    }
-
-    public function edit($id)
-    {
-        //
+    
     }
 
 
@@ -112,14 +97,15 @@ class CategoryController extends Controller
             return response()->json([
                 'error' => $exception->errors(),
             ]);
-        }
+        } 
+    
     }
 
 
     public function destroy(Request $request)
     {
         if ($request->ajax()) {
-            try {
+            
                 $category_exist = Category::findOrfail($request->id);
                 if ($category_exist && $category_exist->user_id == Auth::id()) {
                     $category_exist->delete();
@@ -131,18 +117,21 @@ class CategoryController extends Controller
                         'error' => 'someting went wrong',
                     ]);
                 }
-            } catch (\Exception $e) {
-                return response()->json([
-                    'error' => $e->getMessage(),
-                ]);
-            }
+                if(!$category_exist){
+
+                    return response()->json([
+                        'error' => 'Category not found',
+                    ]);
+
+                }
+        
         }
     }
 
     public function getCategory(Request $request)
     {
         if ($request->ajax()) {
-            try {
+            
                 $category_exist = Category::findOrfail($request->id);
                 if ($category_exist && $category_exist->user_id == Auth::id()) {
                     return response()->json([
@@ -157,11 +146,14 @@ class CategoryController extends Controller
                         'error' => 'someting went wrong',
                     ]);
                 }
-            } catch (\Exception $e) {
-                return response()->json([
-                    'error' => $e->getMessage(),
-                ]);
-            }
+
+                if(!$category_exist){
+                    return response()->json([
+                        'error' => 'Category not found',
+                    ]);
+                }
+               
+            
         }
     }
 }

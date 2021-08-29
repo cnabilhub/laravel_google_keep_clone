@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tag;
 use App\Models\Note;
-use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\ValidationException;
 
 class NoteController extends Controller
 {
@@ -15,36 +12,32 @@ class NoteController extends Controller
 
     public function index($cat = 0,Request $request)
     {
-
+        // search tern
         $term = $request->term;
-        // dd($request);
-        // category filter
-
+    
         if ($cat == 0) {
 
             // No category selected
             $data['notes'] = Note::where([
-
                 ['title','LIKE','%'.$term.'%'],
                 ['user_id', '=', Auth::id()],
-                
-                ])->orWhere('content','LIKE','%'.$term.'%')
+                ['content', 'LIKE', '%' . $term . '%'],
+                ])->latest()
                 ->paginate(6);
-        } else {
-            // category selected
+        } else{
 
+            // category selected
             $data['selected'] = $cat;
             $data['notes'] = Note::where([
-
-                ['title','LIKE','%'.$term.'%'],
                 ['title','LIKE','%'.$term.'%'],
                 ['category_id', '=', $cat],
                 ['user_id', '=', Auth::id()],
-
-                ])->paginate(6);
+                ['content', 'LIKE', '%' . $term . '%'],
+                ])->latest()
+                ->paginate(6);
         }
         // Append categories who have notes  in the filter
-        $data['categories'] = Category::where('user_id', '=', Auth::id())->get();
+        $data['categories'] = Auth::user()->categories;
 
         $data['term'] = $term;
 
@@ -55,10 +48,10 @@ class NoteController extends Controller
     public function create()
     {
         //Show all categories created by this user
-        $categories = Category::where('user_id', '=', Auth::id())->get();
+        $categories = Auth::user()->categories;
 
         //Show all tags created by this user
-        $tags = Tag::where('user_id', '=', Auth::id())->get();
+        $tags =Auth::user()->tags;
 
         return (view('notes.create', ['categories' => $categories, 'tags' => $tags]));
     }
@@ -67,91 +60,89 @@ class NoteController extends Controller
     public function store(Request $request)
     {
 
-
         //Validation
         $data = $request->validate([
             'title' => 'bail|required|max:191',
             'content' => 'bail|required|max:10000',
             'category_id' => 'bail|integer',
-        ], [
-            'title.required' => 'Note title is required ',
-            'title.max' => 'Note title cannot me more than :max caracter ',
-            'title.required' => 'Note title is required ',
         ]);
 
         // Append authentificated user id 
         $data['user_id'] = Auth::id();
         // Create note
         $note = Note::create($data);
+
+        // append tags
         $note->tags()->attach($request->tags);
         $note->save();
 
-
-        return redirect()->route('notes.create')
-            ->with('message', 'Note created Successfully 👍');
+        if($note){
+            return redirect()->route('notes.create')
+                ->with('message', 'Note created Successfully');
+        }else{
+            return redirect()->route('notes.create')
+                ->with('error', 'Someting went wrrong ');
+        }
     }
 
 
     public function show($id)
     {
-        //
+        //search for note by id 
         $note = Note::findOrFail($id);
+
         if ($note) {
 
             return view('notes.show')->with(['note' => $note]);
+
         } else {
-            return view('notes.show')->with(['error' => 'No note found !!']);
+            return view('notes.show')->with(['error' => 'This Note not found !!']);
         }
     }
 
 
     public function edit($id)
     {
-        //find notes
+        //find note
         $note = Note::findOrFail($id);
 
         if ($note) {
 
             //Show all categories created by this user
-            $categories = Category::where('user_id', '=', Auth::id())->get();
+            $categories = Auth::user()->categories;
 
             //Show all tags created by this user
-            $tags = Tag::where('user_id', '=', Auth::id())->get();
+            $tags = Auth::user()->tags;
 
-            $selectedTags = $note->tags->map(function ($tag) { return $tag->id;});
+            // Note tags ids array
+            $selectedTags = $note->tags->map(function ($tag) { return $tag->id;})->toArray();
         
-            // dd( $selectedTags);
-
                 return view('notes.edit')->with([
                     'note' => $note, 
                     'categories' => $categories,
                     'tags' => $tags,
-                    'selectedTags'=> $selectedTags->toArray()
+                    'selectedTags'=> $selectedTags
                 ]);
 
-
         } else {
-            return view('notes.edit')->with(['error' => 'No note found !!']);
+            return view('notes.edit')->with(['error' => 'This Note not found !!']);
         }
     }
 
+
+
     public function update(Request $request, $id)
     {
-                //Validation
-        $data = $request->validate([
-            'title' => 'bail|required|max:191',
-            'content' => 'bail|required|max:10000',
-            'category_id' => 'bail|integer',
-        ], [
-            'title.required' => 'Note title is required ',
-            'title.max' => 'Note title cannot must more than :max caracter ',
-            'title.required' => 'Note title is required ',
-        ]);
 
         // check if note exist
         $note = Note::findOrFail($id);
-        
-        
+
+        //Validation
+        $request->validate([
+            'title' => 'bail|required|max:191',
+            'content' => 'bail|required|max:10000',
+            'category_id' => 'bail|integer',
+        ]);
 
         if($note){
 
@@ -165,12 +156,15 @@ class NoteController extends Controller
                 $note->tags()->detach($oldTags);
                 $note->tags()->attach($request->tags);
                 $note->save();
-                return redirect()->route('notes.edit',$id)
-            ->with('message', 'Note Updated Successfully 👍');
+            return redirect()->route('notes.edit',$id)
+
+            ->with('message', 'Note Updated Successfully');
 
             }else{
+
                    return redirect()->route('notes.edit',$id)
             ->with('error', 'You dont have rights to edit this note');
+
             }
 
         }else{

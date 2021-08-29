@@ -80,12 +80,10 @@
                 </div>
                 <div class="modal-body">
                     <form action="{{ route('category.update') }}" class="form-group update-form">
-                        <input type="hidden" id="id" name="id" class="form-control">
-                        <input type="text" id="name" name="name" class="form-control">
-                        <textarea type="text" id="desc" name="desc" class="form-control mt-2">
-
+                        <input type="hidden" id="modal-id" name="id" class="form-control">
+                        <input type="text" id="modal-name" name="name" class="form-control" autocomplete="false">
+                        <textarea autocomplete="false" type="text" id="modal-desc" name="desc" class="form-control mt-2">
                           </textarea>
-
 
                 </div>
                 <div class="modal-footer">
@@ -255,7 +253,6 @@
 
         // EDIT ITEM
         function edititem(id) {
-
             $.ajax({
                 url: "{{ route('getCategory.ajax') }}",
                 type: 'GET',
@@ -265,9 +262,14 @@
             }).done(function(server_data) {
 
                 if (server_data) {
-                    $('#id').val(id)
-                    $('#name').val(server_data.message.name)
-                    $('#desc').val(server_data.message.desc)
+
+                    document.getElementById('modal-name').value = ''
+                    document.getElementById('modal-desc').value = ''
+
+                    document.getElementById('modal-id').value = id
+                    document.getElementById('modal-name').value = server_data.message.name
+                    document.getElementById('modal-desc').value = server_data.message.desc
+
                     $('.modal').modal('show');
                 }
 

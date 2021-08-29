@@ -51,6 +51,11 @@ Route::middleware(['auth'])->group(function () {
      Route::get('/tags', [TagController::class, 'index'])->name('tags');
      Route::post('/tags/store', [TagController::class, 'store'])->name('tags.store');
      Route::get('/tags/list', [TagController::class, 'getTags'])->name('tags.list');
+     Route::put('/tags/update/ajax', [TagController::class, 'update'])->name('tag.update');
+
+     Route::delete('/tag/{id?}', [TagController::class, 'destroy'])->name('tags.destroy')->where('id', '[0-9]+');
+
+     Route::get('/tags/ajax/{id?}', [TagController::class, 'getTag'])->name('gettag.ajax')->where('id', '[0-9]+');
 
 
      // settings 

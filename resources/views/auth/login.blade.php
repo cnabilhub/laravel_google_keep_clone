@@ -88,6 +88,9 @@
 
     @include('layout.script')
 
+    @include('layout.notifications')
+
+
 </body>
 
 </html>

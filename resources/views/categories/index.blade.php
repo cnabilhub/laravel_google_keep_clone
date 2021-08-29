@@ -11,22 +11,7 @@
 @section('section')
     <div class="container">
         <div class="row">
-            <div class="col col-md-8">
-                <table class="table bg-white table yajra-datatable mb-5">
-                    <thead class="bg-dark text-white">
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Description </th>
-                            <th scope="col">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-md-4">
+             <div class="col-md-4 mb-3">
                 <div class="card">
                     <div class="card-header bg-warning">
                         Create Category
@@ -64,6 +49,22 @@
                     </div>
                 </div>
             </div>
+            <div class="col col-md-8 table-container">
+                <table class="table bg-white table yajra-datatable mb-5">
+                    <thead class="bg-dark text-white">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Description </th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+           
         </div>
     </div>
 

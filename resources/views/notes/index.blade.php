@@ -57,7 +57,7 @@
                             {!! \Illuminate\Support\Str::limit($note->content, 180, $end = '...') !!}
                         </div>
 
-                        <a href="/{{ $note->category->id }}" class="card-subtitle ml-2 mb-4">
+                        <a href="{{route('home',$note->category->id)}}" class="card-subtitle ml-2 mb-4">
                             <i class="far fa-list-alt"></i>
                             {{ $note->category->name }}</a>
 

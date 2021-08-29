@@ -21,8 +21,9 @@ class NoteController extends Controller
             $data['notes'] = Note::where([
                 ['title','LIKE','%'.$term.'%'],
                 ['user_id', '=', Auth::id()],
-                ['content', 'LIKE', '%' . $term . '%'],
-                ])->latest()
+                ])->orWhere([['content', 'LIKE', '%' . $term . '%'], 
+                ['user_id', '=', Auth::id()]])
+                ->latest()
                 ->paginate(6);
         } else{
 

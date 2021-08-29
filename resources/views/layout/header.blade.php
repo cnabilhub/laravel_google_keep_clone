@@ -43,15 +43,18 @@
                         <div class="dropdown">
                             <button class="btn dropdown-toggle bg-white shadow-sm" type="button" id="dropdownMenuButton"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                @if (Auth::user()->img_path)
 
-                                    <img src="{{ asset('/images/profiles/' . Auth::user()->img_path) }}"
-                                        class="profile-img" alt="">
 
-                                @else
-                                    <img src="{{ asset('/images/profiles/default.png') }}" class="profile-img" alt="">
+                                    @if (Auth::user()->img_path)
 
-                                @endif ()
+                                        <img src="{{ env('APP_URL').'/images/profiles/' . Auth::user()->img_path }}"
+                                            class="profile-img" alt="">
+
+                                    @else
+                                        <img src="{{env('APP_URL').'/images/profiles/default.png' }}" class="profile-img" alt="">
+
+                                    @endif ()
+
 
 
                                 {{ Auth::user()->name }}

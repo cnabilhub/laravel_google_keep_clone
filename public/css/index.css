@@ -141,3 +141,19 @@ grid-template-columns: 70px 70px;
     max-height: 30px !important;
     margin: 4px;
 }
+
+#DataTables_Table_0 {
+    max-width: 108%;
+    padding: 0;
+    margin: 0;
+        margin-bottom: 0px;
+    text-align: center;
+    overflow: hidden;
+}
+
+.table-container {
+max-width: 100%;
+padding: 10px;
+scale: 0.9;
+  
+}

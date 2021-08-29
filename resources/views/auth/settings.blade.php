@@ -40,17 +40,19 @@
                 </div>
                 <div class="col-md-6">
 
-                    @if(Auth::user()->img_path !== null)
-
-                    <img class="mb-3 img-thumbnail" id="image"
-                        src="{{asset('/images/profiles/'.Auth::user()->img_path)}}">
-
-                    @else
-                    <img src="{{asset('/images/profiles/default.png')}}" class="mb-3 img-thumbnail" id="image">
-
-                    @endif ()
 
 
+                                
+                @if(Auth::user()->img_path !== null)
+                
+                <img class="mb-3 img-thumbnail" id="image"
+                src="{{env('APP_URL').'/images/profiles/'.Auth::user()->img_path}}">
+                
+                @else
+                <img src="{{env('APP_URL').'/images/profiles/default.png'}}" class="mb-3 img-thumbnail" id="image">
+                
+                @endif ()
+                
                     <input id="files" type="file" class="form-control mt-3 mb-3 img" alt="avatar" name="img">
                 </div>
             </div>

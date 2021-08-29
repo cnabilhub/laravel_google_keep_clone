@@ -12,22 +12,8 @@
 @section('section')
     <div class="container">
         <div class="row">
-            <div class="col col-md-8">
-                <table class="table bg-white table yajra-datatable mb-5">
-                    <thead class="bg-dark text-white">
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Color </th>
-                            <th scope="col">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
 
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-md-4">
+                      <div class="col-md-4 mb-3">
                 <div class="card">
                     <div class="card-header bg-warning">
                         Create tag
@@ -65,6 +51,23 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col col-md-8 table-container">
+                <table class="table bg-white table yajra-datatable mb-5">
+                    <thead class="bg-dark text-white">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Color </th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+
         </div>
     </div>
 
@@ -103,10 +106,19 @@
 <script src="https://cdn.jsdelivr.net/npm/spectrum-colorpicker2/dist/spectrum.min.js"></script>
 <script>
 $('#color-picker').spectrum({
-  type: "color"
+   type: "component",
+  showPaletteOnly: true,
+  togglePaletteOnly: true,
+  showInput: true,
+  showInitial: true
 });
+
 $('#modal-color').spectrum({
-  type: "color"
+   type: "component",
+  showPaletteOnly: true,
+  togglePaletteOnly: true,
+  showInput: true,
+  showInitial: true
 });
 
         // INITIALIZE HEADER

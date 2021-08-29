@@ -20,17 +20,25 @@
             <form class="form-signin" method="POST" action="{{route('auth.create')}}" enctype="multipart/form-data">
                 @csrf
                 <span id="reauth-email" class="reauth-email"></span>
-                <input name="name" type="text" id="inputEmail" class="form-control" placeholder="Name" required
+                <input name="name" type="text" id="inputEmail" class="form-control @error('name') is-invalid @enderror" placeholder="Name" required
                     autofocus>
-                <input name="email" type="email" id="inputEmail" class="form-control" placeholder="Email address"
+
+                    @error('name')<div class="alert alert-danger">{{ $message }}</div>@enderror
+                    
+                    
+                    <input name="email" type="email" id="inputEmail" class="form-control @error('email') is-invalid @enderror" placeholder="Email address"
                     required>
+                    @error('email')<div class="alert alert-danger">{{ $message }}</div>@enderror
 
                 <input id="files" type="file" class="form-control mt-3 mb-3 img" alt="avatar" name="img">
 
                 <img src="{{asset('images/profiles/default.png')}}" alt="" class="mb-3 img-thumbnail" id="image">
 
-                <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password"
+                <input name="password" type="password" id="inputPassword" class="form-control @error('password') is-invalid @enderror" placeholder="Password"
                     required>
+
+                                        @error('password')<div class="alert alert-danger">{{ $message }}</div>@enderror
+
 
                 <button class="btn  btn-warning btn-block form-control mt-4 mb-2" type="submit">Register</button>
             </form>
@@ -43,6 +51,11 @@
     </div>
 
     <style>
+        #image {
+    width: 80px;
+    border-radius: 50%;
+}
+
         body,
         html {
             height: 100%;
@@ -103,6 +116,8 @@
  
 
     </script>
+
+    @include('layout.notifications')
 </body>
 
 </html>

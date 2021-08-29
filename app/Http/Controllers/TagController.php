@@ -14,7 +14,7 @@ class TagController extends Controller
     // Tag page 
     public function index()
     {
-        return view('Tags.index');
+        return view('tags.index');
     }
 
     // get Tags by ajax for datatables 

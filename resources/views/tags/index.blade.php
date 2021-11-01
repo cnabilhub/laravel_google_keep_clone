@@ -206,6 +206,14 @@ $('#modal-color').spectrum({
                 $('.icon').removeClass('d-none');
                 $('.loading').addClass('d-none');
             }).fail(function(jqXHR, textStatus, errorThrown) {
+
+                $('.icon').removeClass('d-none');
+                $('.loading').addClass('d-none');
+
+console.log(errorThrown);
+console.log(textStatus);
+console.log(jqXHR);
+
                 Toast.fire({
                     icon: 'error',
                     title: 'Somting went wrong in the server'

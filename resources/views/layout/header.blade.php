@@ -47,7 +47,7 @@
 
                                     @if (Auth::user()->img_path)
 
-                                        <img src="{{ env('APP_URL').'/images/profiles/' . Auth::user()->img_path }}"
+                                        <img src="{{ URL::to('/').'/images/profiles/' . Auth::user()->img_path }}"
                                             class="profile-img" alt="">
 
                                     @else

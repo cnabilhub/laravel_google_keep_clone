@@ -46,7 +46,7 @@
                 @if(Auth::user()->img_path !== null)
                 
                 <img class="mb-3 img-thumbnail" id="image"
-                src="{{env('APP_URL').'/images/profiles/'.Auth::user()->img_path}}">
+                src="{{URL::to('/').'/images/profiles/'.Auth::user()->img_path}}">
                 
                 @else
                 <img src="{{env('APP_URL').'/images/profiles/default.png'}}" class="mb-3 img-thumbnail" id="image">

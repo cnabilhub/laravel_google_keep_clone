@@ -128,7 +128,7 @@ class UserController extends Controller
 
         if ($request->img !== null) {
 
-            $newImgName = time() . '-' . $request->name . '.' . $request->img->extension();
+            $newImgName = time().'.'.$request->img->extension();
             $request->img->move(public_path('images/profiles'), $newImgName);
             File::delete(public_path('images/profiles/' . Auth::user()->img_path));
             $user['img_path'] = $newImgName;

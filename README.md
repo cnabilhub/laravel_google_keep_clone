@@ -2,6 +2,10 @@
 # Overview
 This is a simple personal Laravel Google keep project where user can create some notes with categories and tags and quickly search, edit and copy it to clipboard.
 
+## Live preview
+[https://lgkc.cnabil.com/public/](https://lgkc.cnabil.com/public/)
+
+
 # Technologies and packages
 - Laravel 
 - WYSIWYG editor using TinyMCE.

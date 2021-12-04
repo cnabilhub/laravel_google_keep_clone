@@ -18,12 +18,11 @@ class NoteController extends Controller
         if ($cat == 0) {
 
             // No category selected
-            $data['notes'] = Note::where([
+            $data['notes'] = Note::orderBy('updated_at', 'desc')->where([
                 ['title','LIKE','%'.$term.'%'],
                 ['user_id', '=', Auth::id()],
                 ])->orWhere([['content', 'LIKE', '%' . $term . '%'], 
                 ['user_id', '=', Auth::id()]])
-                ->latest()
                 ->paginate(6);
         } else{
 

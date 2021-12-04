@@ -108,13 +108,14 @@
             @include('layout.empty')
         @endforelse
 
-          <div class="row p-3 bg-light">
+        
+
+    </div>
+      <div class="row p-3 bg-light">
                <div class="col-md-12 d-flex justify-content-end align-items-center ">
                 {{ $data['notes']->links() }}
             </div>
           </div>
-
-    </div>
     </div>
     @section('js')
 

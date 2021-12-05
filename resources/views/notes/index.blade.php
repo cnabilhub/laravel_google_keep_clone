@@ -67,11 +67,11 @@
                         {{-- TAGS --}}
                         <div class="tags mt-4">
                             @foreach ($note->tags as $tag)
-                                <a href="#" class="tag-link text-decoration-none">
+                                <span  class="tag-link text-decoration-none">
                                     <span class="tag rounded px-3 py-1 bg-light rounded-pill"
                                         style="border: 2px solid{{ $tag->color }};color: {{ $tag->color }};">
                                         {{ $tag->name }}</span>
-                                </a>
+                                </span>
                             @endforeach
                         </div>
 

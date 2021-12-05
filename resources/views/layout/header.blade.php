@@ -42,7 +42,8 @@
                     @auth
                         <div class="dropdown">
                             <button class="btn dropdown-toggle bg-white shadow-sm" type="button" id="dropdownMenuButton"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                data-bs-toggle="dropdown">
 
 
                                     @if (Auth::user()->img_path)

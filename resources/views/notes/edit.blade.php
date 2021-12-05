@@ -89,8 +89,14 @@ Click <a class="text-warning" href="{{ route('categories') }}">Here </a> to add 
 
 @section('js')
 
-<script src="https://cdn.tiny.cloud/1/hlzrlscsfctrtbe3dqzfxtgbdfcwryi89xykg62ytxzgudct/tinymce/5/tinymce.min.js"
-referrerpolicy="origin"></script>
+    <script src="https://cdn.tiny.cloud/1/hlzrlscsfctrtbe3dqzfxtgbdfcwryi89xykg62ytxzgudct/tinymce/5/tinymce.min.js"
+        referrerpolicy="origin"></script>
+
+        @production
+            <script src="{{asset('script/tinymce.min.js')}}" referrerpolicy="origin"></script>
+        @endproduction
+
+
 
 <script>
 tinymce.init({

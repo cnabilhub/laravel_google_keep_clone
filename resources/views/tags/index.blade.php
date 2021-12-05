@@ -103,7 +103,9 @@
 
 @section('js')
 
-<script src="https://cdn.jsdelivr.net/npm/spectrum-colorpicker2/dist/spectrum.min.js"></script>
+{{--  spectrum --}}
+<script src="{{asset('/script/spectrum.min.js')}}"> </script>
+
 <script>
 $('#color-picker').spectrum({
    type: "component",
